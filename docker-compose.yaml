@@ -1,0 +1,13 @@
+version: '3.6'
+services:
+  php:
+    container_name: "bundle-php"
+    build:
+      context: ./docker/php
+    restart: "no"
+    environment:
+      - APP_SECRET=${APP_SECRET}
+    volumes:
+      - .:/var/www
+    ports:
+      - "80:8000"

@@ -1,0 +1,3 @@
+standalone_foobar:
+  path: /
+  controller: LongitudeOne\CookiesConsentBundle\Controller\FooController::barAction

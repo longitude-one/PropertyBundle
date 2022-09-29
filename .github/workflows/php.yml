@@ -58,7 +58,7 @@ jobs:
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHPStan Static Analysis
-        uses: php-actions/phpstan@v2
+        uses: php-actions/phpstan@master
         with:
-          configuration: tools/php-stan/php-stan.neon
-          memory_limit: 256M
+          path: src/ tests/
+#          configuration: tools/php-stan/php-stan.neon

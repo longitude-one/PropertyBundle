@@ -1,8 +1,17 @@
 <?php
 
-namespace LongitudeOne\CookiesConsentBundle\Tests\App;
+/**
+ * This file is part of the LongitudeOne/PropertyBundle
+ *
+ * PHP 8.1 | Symfony 6.1+
+ *
+ * Copyright LongitudeOne - Alexandre Tranchant
+ * Copyright 2021 - 2022
+ */
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
+namespace LongitudeOne\PropertyBundle\Tests\App;
+
+require_once __DIR__.'/../../../vendor/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
 

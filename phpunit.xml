@@ -14,9 +14,16 @@
     <php>
         <server name="KERNEL_DIR" value="./tests/App/" />
     </php>
-
+    <coverage cacheDirectory="./.coverage/cache/">
+        <include>
+            <directory suffix=".php">src/</directory>
+        </include>
+        <report>
+            <html outputDirectory=".coverage/" />
+        </report>
+    </coverage>
     <testsuites>
-        <testsuite name="CookiesConsentBundle Suite">
+        <testsuite name="PropertyBundle Suite">
             <directory suffix="Test.php">./tests/</directory>
         </testsuite>
     </testsuites>

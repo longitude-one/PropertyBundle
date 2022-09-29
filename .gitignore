@@ -1,7 +1,9 @@
+/.coverage/
 /tests/App/cache
 /tests/App/logs
 /tools/php-cs-fixer/composer.json
 /tools/php-cs-fixer/vendor/
+/tmp-phpqa/
 /var/
 /vendor/
 .phpunit.result.cache

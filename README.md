@@ -1,65 +1,38 @@
-# Bundle template
+# Property Bundle
 
-This package is a bundle template to help you to:
-* create a new bundle 
-* with a dummy controller (feel free to delete it)
-* with an embedded application to test your bundle
-* with phpunit unit test on a dummy controller (feel free to delete this test)
-* with phpunit function test on this dummy controller (feel free to delete this test)
-* with phpcsfixer deployed as an external tool
+## Bundle under development, do not use.
 
-## Installation with Docker
-A very simple docker is embedded to:
-* provide you a PHP8.1 environment
-* provide you composer, symfony and phpcsfixer as external tools
-* launch local symfony server to help you to dev
+## Install
 
-First, edit the .env file and update the two parameters.
+```shell
+composer require longitude-one/property-bundle
+``` 
 
-Then simply build your container:
-````shell
-docker-compose up --build
-````
-With your browser, you can access the provided dummy controller by accessing the symfony local server http://127.0.0.1/
+## Contributing
 
-# Installation without docker
-If you dislike docker, you can install all this stuff with the following commands, but you need to install PHP, composer
-and Symfony on your system.
-````shell
-## Install the needed libraries
-composer install
-## Install PHP-CS-FIXER
-composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
-## Start the localserver. You can access it via http://127.0.0.1:8000/
-symfony server:start --dir /var/www/tests/App/public
-````
+Clone project
+```shell
+git clone https://github.com/longitude-one/PropertyBundle.git
+cd PropertyBundle
+```
 
-# How to test your bundle?
-Your new bundle is created and ready to be test (replace my_bundle-php with the name of your php container):
-````shell
-docker exec my_bundle-php ./vendor/bin/phpunit
-````
-If you don't use docker:
-````shell
-./vendor/bin/phpunit
-````
+Install vendor libraries
+```shell
+docker run --init -it --rm -v "$(pwd):/project" -v "$(pwd)/tmp-phpqa:/tmp" -w /project jakzal/phpqa composer update
+```
 
-# How to fix your code and add a copyright on your files?
-This package comes with a configured phpcsfixer. The configuration is set to respect the @Symfony rules and add a header
-on your files :)
+Test project
+```shell
+docker run --init -it --rm -v "$(pwd):/project" -v "$(pwd)/tmp-phpqa:/tmp" -w /project jakzal/phpqa php -d pcov.enabled=1 ./vendor/bin/phpunit --coverage-html ./.coverage/ 
+```
 
-First, edit the `tools/headers.txt` file.
+Test code syntax
+```shell
+docker run --init -it --rm -v "$(pwd):/project" -v "$(pwd)/tmp-phpqa:/tmp" -w /project jakzal/phpqa php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.php --allow-risky=yes
+```
 
-Optionally, edit the `tools/php-cs-fixer/.php-cs-fixer.php`.
+Test code quality
+```shell
+docker run --init -it --rm -v "$(pwd):/project" -v "$(pwd)/tmp-phpqa:/tmp" -w /project jakzal/phpqa phpstan analyse src tests --configuration tools/php-stan/php-stan.neon -l 9
+```
 
-PHP-CS-FIXER is now set :)
-
-````shell
-docker exec my_bundle-php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
-docker exec my_bundle-php tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
-````
-If you don't use docker:
-````shell
-tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
-tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
-````

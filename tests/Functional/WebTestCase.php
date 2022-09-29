@@ -1,8 +1,17 @@
 <?php
 
-namespace LongitudeOne\CookiesConsentBundle\Tests\Functional;
+/**
+ * This file is part of the LongitudeOne/PropertyBundle
+ *
+ * PHP 8.1 | Symfony 6.1+
+ *
+ * Copyright LongitudeOne - Alexandre Tranchant
+ * Copyright 2021 - 2022
+ */
 
-use LongitudeOne\CookiesConsentBundle\Tests\App\AppKernel;
+namespace LongitudeOne\PropertyBundle\Tests\Functional;
+
+use LongitudeOne\PropertyBundle\Tests\App\AppKernel;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as SymfonyWebTestCase;
 
 abstract class WebTestCase extends SymfonyWebTestCase

@@ -26,11 +26,5 @@
     "phpunit/phpunit": "^8.5|^9.5",
     "symfony/browser-kit": "^6.1",
     "jetbrains/phpstorm-attributes": "^1.0"
-  },
-  "config": {
-    "allow-plugins": {
-      "symfony/flex": true,
-      "symfony/runtime": true
-    }
   }
 }

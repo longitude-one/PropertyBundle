@@ -19,6 +19,6 @@ class PropertyBundleTest extends TestCase
     public function testGetPath(): void
     {
         $bundle = new PropertyBundle();
-        self::assertSame(dirname(__DIR__), $bundle->getPath());
+        self::assertSame(dirname(__DIR__).'/tests', $bundle->getPath());
     }
 }

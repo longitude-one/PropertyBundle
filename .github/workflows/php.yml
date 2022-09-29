@@ -60,5 +60,4 @@ jobs:
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@master
         with:
-          path: src/ tests/
-#          configuration: tools/php-stan/php-stan.neon
+          configuration: tools/php-stan/php-stan.neon

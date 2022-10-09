@@ -45,5 +45,6 @@ class PropertyRepositoryTest extends WebTestCase
     {
         $linkedEntity = new ToolEntity();
         self::assertNull($this->propertyRepository->findProperty($linkedEntity, 'foo'));
+        self::assertCount(0, $this->propertyRepository->findAllProperties($linkedEntity));
     }
 }

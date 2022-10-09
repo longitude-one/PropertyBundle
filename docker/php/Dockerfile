@@ -19,12 +19,10 @@ COPY php.ini /usr/local/etc/php/conf.d/php.ini
 WORKDIR /var/www
 
 ## Install our bundle
-## Install PHP-CS-FIXER as an another tools to avoid to complexify our needed dev libraries
 ## Start Symfony local server
 
 ## Install the libraries
 CMD composer install ; \
-    php tests/App/console doctrine:schema:create --env=test ; \
     symfony server:start --dir /var/www/tests/App/public
 
 EXPOSE 8000

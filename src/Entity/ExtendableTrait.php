@@ -13,8 +13,26 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 trait ExtendableTrait
 {
-    public function getClassname(): string
+    /**
+     * @var PropertyInterface[]
+     */
+    private iterable $properties;
+
+    /**
+     * @return PropertyInterface[]
+     */
+    public function getProperties(): iterable
     {
-        return get_class($this);
+        return $this->properties;
+    }
+
+    /**
+     * @param PropertyInterface[] $properties
+     */
+    public function setProperties(iterable $properties): self
+    {
+        $this->properties = $properties;
+
+        return $this;
     }
 }

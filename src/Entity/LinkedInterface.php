@@ -13,7 +13,7 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 interface LinkedInterface
 {
-    public function getLinkedId(): int;
-
     public function getLinkedClassname(): string;
+
+    public function getLinkedId(): int;
 }

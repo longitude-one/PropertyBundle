@@ -13,7 +13,13 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 interface ExtendableInterface
 {
-    public function getId(): int;
+    /**
+     * @return PropertyInterface[]
+     */
+    public function getProperties(): iterable;
 
-    public function getClassname(): string;
+    /**
+     * @param PropertyInterface[] $properties
+     */
+    public function setProperties(iterable $properties): self;
 }

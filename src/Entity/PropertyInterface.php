@@ -13,11 +13,17 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 interface PropertyInterface
 {
-    public function getValue(): bool|float|int|null|string;
+    public function getEntityClassname(): string;
 
-    public function setValue(bool|float|int|null|string $value): self;
+    public function getEntityId(): int;
 
     public function getName(): string;
 
+    public function getValue(): bool|float|int|null|string;
+
+    public function setEntity(LinkedInterface $linkedEntity): self;
+
     public function setName(string $name): self;
+
+    public function setValue(bool|float|int|null|string $value): self;
 }

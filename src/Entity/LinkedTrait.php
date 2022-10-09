@@ -9,11 +9,12 @@
  * Copyright 2021 - 2022
  */
 
-namespace LongitudeOne\PropertyBundle\Tests\Unit\Tools;
+namespace LongitudeOne\PropertyBundle\Entity;
 
-use LongitudeOne\PropertyBundle\Entity\ExtendableTrait;
-
-class ExtendableEntity
+trait LinkedTrait
 {
-    use ExtendableTrait;
+    public function getLinkedClassname(): string
+    {
+        return get_class($this);
+    }
 }

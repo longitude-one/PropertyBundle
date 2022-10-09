@@ -21,8 +21,12 @@ class Property implements PropertyInterface
     #[ORM\Column(type: 'string', length: 255)]
     private string $entityClassname;
 
-    #[ORM\Column(type: 'int')]
+    #[ORM\Column(type: 'integer')]
     private int $entityId;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private ?int $id = null;
 
     #[ORM\Column(type: 'string', length: 31)]
     private string $name;
@@ -38,6 +42,11 @@ class Property implements PropertyInterface
     public function getEntityId(): int
     {
         return $this->entityId;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getName(): string

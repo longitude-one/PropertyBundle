@@ -23,9 +23,9 @@ use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
  */
 class PropertyRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry, string $entityClass = Property::class)
+    public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, $entityClass);
+        parent::__construct($registry, Property::class);
     }
 
     /**
@@ -50,7 +50,7 @@ class PropertyRepository extends ServiceEntityRepository
         return $this->findOneBy([
             'entityId' => $linkedEntity->getLinkedId(),
             'entityClassname' => $linkedEntity->getLinkedId(),
-            'propertyName' => $propertyName,
+            'name' => $propertyName,
         ]);
     }
 }

@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\App;
 
+use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Exception;
 use JetBrains\PhpStorm\Pure;
 use LongitudeOne\PropertyBundle\PropertyBundle;
@@ -26,6 +27,7 @@ class AppKernel extends Kernel
         return [
             new FrameworkBundle(),
             new PropertyBundle(),
+            new DoctrineBundle(),
         ];
     }
 

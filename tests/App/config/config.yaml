@@ -5,3 +5,31 @@ framework:
     resource: '%kernel.project_dir%/tests/App/config/routing.yaml'
     strict_requirements: ~
   test: ~
+doctrine:
+  dbal:
+    url: 'sqlite:///%kernel.project_dir%/var/data.db'
+
+    # IMPORTANT: You MUST configure your server version,
+    # either here or in the DATABASE_URL env var (see .env file)
+    server_version: '13'
+  orm:
+    auto_generate_proxy_classes: true
+    naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+    auto_mapping: true
+    mappings:
+      App:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/src/Entity'
+        prefix: 'App\Entity'
+        alias: App
+
+services:
+  Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface:
+#    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
+    autowire: true
+    tags: [ 'doctrine.repository_service' ]
+  LongitudeOne\PropertyBundle\Repository\PropertyRepository:
+#    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
+    autowire: true
+    tags: [ 'doctrine.repository_service' ]

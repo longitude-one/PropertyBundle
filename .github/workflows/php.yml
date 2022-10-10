@@ -62,3 +62,4 @@ jobs:
         with:
           path: src/ tests/
           level: 9
+          configuration: tools/php-stan/php-stan.neon

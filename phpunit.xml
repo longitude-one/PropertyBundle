@@ -13,6 +13,7 @@
 >
     <php>
         <server name="KERNEL_DIR" value="./tests/App/" />
+        <server name="DATABASE_URL" value="sqlite:///in_memory" />
     </php>
     <coverage cacheDirectory="./.coverage/cache/">
         <include>

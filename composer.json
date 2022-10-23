@@ -17,7 +17,9 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "LongitudeOne\\PropertyBundle\\Tests\\": "tests/",
+      "LongitudeOne\\PropertyBundle\\Tests\\Unit\\": "tests/Unit",
+      "LongitudeOne\\PropertyBundle\\Tests\\Functional\\": "tests/Functional",
+      "LongitudeOne\\PropertyBundle\\Tests\\Application\\": "tests/Application",
       "LongitudeOne\\PropertyBundle\\Tests\\App\\": "tests/App/src"
     }
   },
@@ -30,6 +32,10 @@
     "symfony/browser-kit": "^6.1",
     "jetbrains/phpstorm-attributes": "^1.0",
     "phpstan/phpstan-doctrine": "^1.3",
-    "symfony/test-pack": "^1.0"
+    "symfony/test-pack": "^1.0",
+    "symfony/twig-pack": "^1.0",
+    "symfony/security-bundle": "^6.1",
+    "easycorp/easyadmin-bundle": "^4.4",
+    "symfony/maker-bundle": "^1.47"
   }
 }

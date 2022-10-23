@@ -39,7 +39,8 @@
     },
     "autoload": {
         "psr-4": {
-            "LongitudeOne\\PropertyBundle\\Tests\\App\\": "src/"
+            "LongitudeOne\\PropertyBundle\\Tests\\App\\": "src/",
+            "Symfony\\Bundle\\TwigBundle\\": "vendor/symfony/twig-bundle/TwigBundle.php"
         }
     },
     "replace": {

@@ -16,8 +16,8 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as SymfonyWebTestCase;
 
 abstract class AppTestCase extends SymfonyWebTestCase
 {
-//    protected static function getKernelClass(): string
-//    {
-//        return Kernel::class;
-//    }
+    protected static function getKernelClass(): string
+    {
+        return Kernel::class;
+    }
 }

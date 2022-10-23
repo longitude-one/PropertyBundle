@@ -3,6 +3,19 @@
   "description": "A Symfony bundle to dynamically add properties to objects",
   "type": "bundle",
   "license": "MIT",
+  "config": {
+    "allow-plugins": {
+      "composer/package-versions-deprecated": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true,
+    "vendor-dir": "vendor/"
+  },
   "require": {
     "php": "^8.1",
     "symfony/http-kernel": "^6.1",
@@ -20,22 +33,41 @@
       "LongitudeOne\\PropertyBundle\\Tests\\Unit\\": "tests/Unit",
       "LongitudeOne\\PropertyBundle\\Tests\\Functional\\": "tests/Functional",
       "LongitudeOne\\PropertyBundle\\Tests\\Application\\": "tests/Application",
+      "LongitudeOne\\PropertyBundle\\Tests\\Tools\\": "tests/Tools",
       "LongitudeOne\\PropertyBundle\\Tests\\App\\": "tests/App/src"
     }
   },
   "require-dev": {
-    "symfony/framework-bundle": "^6.1",
-    "symfony/yaml": "^6.1",
-    "symfony/console": "^6.1",
-    "symfony/process": "^6.1",
-    "phpunit/phpunit": "^8.5|^9.5",
-    "symfony/browser-kit": "^6.1",
+    "easycorp/easyadmin-bundle": "^4.4",
     "jetbrains/phpstorm-attributes": "^1.0",
     "phpstan/phpstan-doctrine": "^1.3",
-    "symfony/test-pack": "^1.0",
-    "symfony/twig-pack": "^1.0",
+    "phpunit/phpunit": "^8.5|^9.5",
+    "symfony/asset": "^6.1",
+    "symfony/browser-kit": "^6.1",
+    "symfony/console": "^6.1",
+    "symfony/css-selector": "^6.1",
+    "symfony/flex": "^2",
+    "symfony/framework-bundle": "^6.1",
+    "symfony/maker-bundle": "^1.47",
+    "symfony/phpunit-bridge": "^6.1",
+    "symfony/process": "^6.1",
+    "symfony/runtime": "6.1.*",
     "symfony/security-bundle": "^6.1",
-    "easycorp/easyadmin-bundle": "^4.4",
-    "symfony/maker-bundle": "^1.47"
+    "symfony/twig-bundle": "^6.1",
+    "symfony/yaml": "^6.1",
+    "twig/extra-bundle": "^2.12|^3.0",
+    "twig/twig": "^2.12|^3.0"
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    }
+  },
+  "extra": {
+    "symfony": {
+      "docker": false
+    },
+   "public-dir": "tests/App/public"
   }
 }

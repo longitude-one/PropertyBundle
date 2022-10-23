@@ -26,6 +26,6 @@ class AdminTest extends AppTestCase
 
         // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h1', 'Welcome to EasyAdmin 4');
+        $this->assertSelectorTextContains('a', 'PropertyBundle Dashbord Tests');
     }
 }

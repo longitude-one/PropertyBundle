@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace LongitudeOne\PropertyBundle\Tests\App;
 
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;

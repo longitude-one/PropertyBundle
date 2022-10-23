@@ -24,7 +24,9 @@
     </coverage>
     <testsuites>
         <testsuite name="PropertyBundle Suite">
-            <directory suffix="Test.php">./tests/</directory>
+            <directory suffix="Test.php">./tests/Unit</directory>
+            <directory suffix="Test.php">./tests/Application</directory>
+            <directory suffix="Test.php">./tests/Functional</directory>
         </testsuite>
     </testsuites>
 </phpunit>

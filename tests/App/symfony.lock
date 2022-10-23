@@ -31,6 +31,9 @@
             "ref": "b131e6cbfe1b898a508987851963fff485986285"
         }
     },
+    "longitude-one/property-bundle": {
+        "version": "dev-test-app-feature"
+    },
     "symfony/console": {
         "version": "6.1",
         "recipe": {

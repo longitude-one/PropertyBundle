@@ -11,8 +11,6 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Application;
 
-use LongitudeOne\PropertyBundle\Tests\Application\AppTestCase;
-
 class AdminTest extends AppTestCase
 {
     public function testDashboardAvailable(): void

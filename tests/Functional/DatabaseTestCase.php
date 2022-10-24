@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the LongitudeOne/PropertyBundle
+ *
+ * PHP 8.1 | Symfony 6.1+
+ *
+ * Copyright LongitudeOne - Alexandre Tranchant
+ * Copyright 2021 - 2022
+ */
+
 namespace LongitudeOne\PropertyBundle\Tests\Functional;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,21 +39,21 @@ class DatabaseTestCase extends WebTestCase
         }
     }
 
+    protected function getEntityManager(): EntityManagerInterface
+    {
+        return $this->entityManager;
+    }
+
     protected function initDatabase(KernelInterface $kernel): void
     {
         $this->entityManager = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         if (null === $this->entityManager) {
-            throw new \Exception("Unable to load doctrine service. Check your test config!");
+            throw new \Exception('Unable to load doctrine service. Check your test config!');
         }
 
         $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();
         $schemaTool = new SchemaTool($this->entityManager);
         $schemaTool->updateSchema($metaData);
-    }
-
-    protected function getEntityManager(): EntityManagerInterface
-    {
-        return $this->entityManager;
     }
 }

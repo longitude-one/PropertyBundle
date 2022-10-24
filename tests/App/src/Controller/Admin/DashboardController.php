@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * This file is part of the LongitudeOne/PropertyBundle
+ *
+ * PHP 8.1 | Symfony 6.1+
+ *
+ * Copyright LongitudeOne - Alexandre Tranchant
+ * Copyright 2021 - 2022
+ */
+
 namespace LongitudeOne\PropertyBundle\Tests\App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -10,6 +19,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DashboardController extends AbstractDashboardController
 {
+    public function configureDashboard(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('PropertyBundle Dashbord Tests');
+    }
+
+    public function configureMenuItems(): iterable
+    {
+        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+    }
+
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
@@ -30,17 +51,5 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
         // return $this->render('some/path/my-dashboard.html.twig');
-    }
-
-    public function configureDashboard(): Dashboard
-    {
-        return Dashboard::new()
-            ->setTitle('PropertyBundle Dashbord Tests');
-    }
-
-    public function configureMenuItems(): iterable
-    {
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

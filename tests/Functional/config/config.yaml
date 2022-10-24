@@ -5,6 +5,7 @@ framework:
         resource: '%kernel.project_dir%/tests/Functional/config/routing.yaml'
         strict_requirements: ~
     test: ~
+    http_method_override: false
 doctrine:
     dbal:
         url: 'sqlite:///:memory:'

@@ -11,6 +11,8 @@
 
 use LongitudeOne\PropertyBundle\Tests\App\Kernel;
 
+$_SERVER['APP_RUNTIME_OPTIONS']['dotenv_path'] = __DIR__.'/../.env';
+
 require_once dirname(__DIR__).'/../../vendor/autoload_runtime.php';
 
 return function (array $context) {

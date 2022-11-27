@@ -12,7 +12,6 @@
 namespace LongitudeOne\PropertyBundle\Tests\Functional;
 
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
-use Exception;
 use JetBrains\PhpStorm\Pure;
 use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -32,7 +31,7 @@ class AppKernel extends Kernel
     }
 
     /**
-     * @throws Exception
+     * @throws \Exception
      */
     public function registerContainerConfiguration(LoaderInterface $loader): void
     {

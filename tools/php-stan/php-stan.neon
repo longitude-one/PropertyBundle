@@ -5,30 +5,29 @@ includes:
 parameters:
 	level: 9
 	paths:
-		- src
-		- tests
+		- ../../PropertyBundle
 	ignoreErrors:
 		-
 			message: "#^Call to an undefined method object\\:\\:getMetadataFactory\\(\\)\\.$#"
 			count: 1
-			path: ../../tests/Functional/DatabaseTestCase.php
+			path: ../../PropertyBundle/Tests/Functional/DatabaseTestCase.php
 
 		-
 			message: "#^Method LongitudeOne\\\\PropertyBundle\\\\Tests\\\\Functional\\\\DatabaseTestCase\\:\\:getEntityManager\\(\\) should return Doctrine\\\\ORM\\\\EntityManagerInterface but returns Doctrine\\\\ORM\\\\EntityManagerInterface\\|null\\.$#"
 			count: 1
-			path: ../../tests/Functional/DatabaseTestCase.php
+			path: ../../PropertyBundle/Tests/Functional/DatabaseTestCase.php
 
 		-
 			message: "#^Parameter \\#1 \\$em of class Doctrine\\\\ORM\\\\Tools\\\\SchemaTool constructor expects Doctrine\\\\ORM\\\\EntityManagerInterface, object given\\.$#"
 			count: 1
-			path: ../../tests/Functional/DatabaseTestCase.php
+			path: ../../PropertyBundle/Tests/Functional/DatabaseTestCase.php
 
 		-
 			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\Tests\\\\Functional\\\\DatabaseTestCase\\:\\:\\$entityManager \\(Doctrine\\\\ORM\\\\EntityManagerInterface\\|null\\) does not accept object\\|null\\.$#"
 			count: 1
-			path: ../../tests/Functional/DatabaseTestCase.php
+			path: ../../PropertyBundle/Tests/Functional/DatabaseTestCase.php
 
 		-
 			message: "#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#"
 			count: 1
-			path: ../../src/DependencyInjection/Configuration.php
+			path: ../../PropertyBundle/DependencyInjection/Configuration.php

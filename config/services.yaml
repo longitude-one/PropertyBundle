@@ -17,19 +17,19 @@ services:
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     LongitudeOne\PropertyBundle\:
-        resource: '../src/'
+        resource: '../PropertyBundle/'
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Resources/config/services.php'
+            - '../PropertyBundle/DependencyInjection/'
+            - '../PropertyBundle/Entity/'
+            - '../PropertyBundle/Tests/'
+            - '../PropertyBundle/Resources/config/services.php'
 
 
     # this creates a service per class whose id is the fully-qualified class name
     LongitudeOne\PropertyBundle\Tests\App\:
-        resource: '../tests/App/src/'
+        resource: '../PropertyBundle/Tests/App/src/'
         exclude:
-            - '../tests/App/src/Entity/'
+            - '../PropertyBundle/Tests/App/src/Entity/'
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

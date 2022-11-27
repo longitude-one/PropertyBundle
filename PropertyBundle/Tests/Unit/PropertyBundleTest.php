@@ -19,6 +19,6 @@ class PropertyBundleTest extends TestCase
     public function testGetPath(): void
     {
         $bundle = new LongitudeOnePropertyBundle();
-        self::assertSame(dirname(__DIR__, 2), $bundle->getPath());
+        self::assertSame(dirname(__DIR__, 3), $bundle->getPath());
     }
 }

@@ -1,5 +1,5 @@
 twig:
-    default_path: '%kernel.project_dir%/tests/App/templates'
+    default_path: '%kernel.project_dir%/PropertyBundle/Tests/App/templates'
 when@test:
     twig:
         strict_variables: true

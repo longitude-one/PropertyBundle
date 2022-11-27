@@ -13,7 +13,6 @@ namespace LongitudeOne\PropertyBundle\Tests\Functional;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
-use LogicException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class DatabaseTestCase extends WebTestCase
@@ -25,7 +24,7 @@ class DatabaseTestCase extends WebTestCase
         $kernel = self::bootKernel();
 
         if ('test' !== $kernel->getEnvironment()) {
-            throw new LogicException('Execution only in Test environment possible!');
+            throw new \LogicException('Execution only in Test environment possible!');
         }
 
         $this->initDatabase($kernel);

@@ -25,22 +25,22 @@
   },
   "autoload": {
     "psr-4": {
-      "LongitudeOne\\PropertyBundle\\": "src/"
+      "LongitudeOne\\PropertyBundle\\": "PropertyBundle/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "LongitudeOne\\PropertyBundle\\Tests\\Unit\\": "tests/Unit",
-      "LongitudeOne\\PropertyBundle\\Tests\\Functional\\": "tests/Functional",
-      "LongitudeOne\\PropertyBundle\\Tests\\Application\\": "tests/Application",
-      "LongitudeOne\\PropertyBundle\\Tests\\Tools\\": "tests/Tools",
-      "LongitudeOne\\PropertyBundle\\Tests\\App\\": "tests/App/src"
+      "LongitudeOne\\PropertyBundle\\Tests\\Unit\\": "PropertyBundle/Tests/Unit",
+      "LongitudeOne\\PropertyBundle\\Tests\\Functional\\": "PropertyBundle/Tests/Functional",
+      "LongitudeOne\\PropertyBundle\\Tests\\Application\\": "PropertyBundle/Tests/Application",
+      "LongitudeOne\\PropertyBundle\\Tests\\Tools\\": "PropertyBundle/Tests/Tools",
+      "LongitudeOne\\PropertyBundle\\Tests\\App\\": "PropertyBundle/Tests/App/src"
     }
   },
   "require-dev": {
     "easycorp/easyadmin-bundle": "^4.4",
     "jetbrains/phpstorm-attributes": "^1.0",
-    "phpstan/phpstan-doctrine": "^1.3",
+    "phpstan/phpstan-doctrine": "^1.3.23",
     "phpunit/phpunit": "^8.5|^9.5",
     "symfony/asset": "^6.1",
     "symfony/browser-kit": "^6.1",
@@ -68,6 +68,6 @@
     "symfony": {
       "docker": false
     },
-   "public-dir": "tests/App/public"
+   "public-dir": "PropertyBundle/Tests/App/public"
   }
 }

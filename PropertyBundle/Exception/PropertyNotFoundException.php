@@ -11,12 +11,9 @@
 
 namespace LongitudeOne\PropertyBundle\Exception;
 
-use Exception;
-use Throwable;
-
-class PropertyNotFoundException extends Exception implements Throwable
+class PropertyNotFoundException extends \Exception implements \Throwable
 {
-    public function __construct(string $propertyName, string $message = '', int $code = 404, ?Throwable $previous = null)
+    public function __construct(string $propertyName, string $message = '', int $code = 404, ?\Throwable $previous = null)
     {
         if (empty($message)) {
             $message = sprintf('Property named "%s" not found', $propertyName);

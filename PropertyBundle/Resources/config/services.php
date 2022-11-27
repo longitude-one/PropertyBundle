@@ -13,6 +13,7 @@ namespace LongitudeOne\PropertyBundle\DependencyInjection\Loader\Configurator;
 
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+
 use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 // use function Symfony\Component\DependencyInjection\Loader\Configurator\service;

@@ -11,7 +11,6 @@
 
 namespace LongitudeOne\PropertyBundle\DependencyInjection;
 
-use Exception;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -23,7 +22,7 @@ class LongitudeOnePropertyExtension extends Extension implements ExtensionInterf
     /**
      * @param array<string, mixed> $configs
      *
-     * @throws Exception when file doesn't exist
+     * @throws \Exception when file doesn't exist
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

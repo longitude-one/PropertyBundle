@@ -23,7 +23,8 @@ WORKDIR /var/www
 
 ## Install the libraries
 CMD composer install ; \
-    symfony server:stop --dir /var/www/tests/App/public ; \
-    symfony server:start --dir /var/www/tests/App/public
+    symfony console assets:install ; \
+    symfony server:stop --dir /var/www/PropertyBundle/Tests/App/public ; \
+    symfony server:start --dir /var/www/PropertyBundle/Tests/App/public
 
 EXPOSE 8000

@@ -14,7 +14,7 @@ namespace LongitudeOne\PropertyBundle\Tests\Functional;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Exception;
 use JetBrains\PhpStorm\Pure;
-use LongitudeOne\PropertyBundle\PropertyBundle;
+use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\Kernel;
@@ -26,7 +26,7 @@ class AppKernel extends Kernel
     {
         return [
             new FrameworkBundle(),
-            new PropertyBundle(),
+            new LongitudeOnePropertyBundle(),
             new DoctrineBundle(),
         ];
     }

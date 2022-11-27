@@ -1,0 +1,3 @@
+extendable_entities:
+    - 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'
+    - 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool'

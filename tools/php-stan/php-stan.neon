@@ -27,3 +27,8 @@ parameters:
 			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\Tests\\\\Functional\\\\DatabaseTestCase\\:\\:\\$entityManager \\(Doctrine\\\\ORM\\\\EntityManagerInterface\\|null\\) does not accept object\\|null\\.$#"
 			count: 1
 			path: ../../tests/Functional/DatabaseTestCase.php
+
+		-
+			message: "#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#"
+			count: 1
+			path: ../../src/DependencyInjection/Configuration.php

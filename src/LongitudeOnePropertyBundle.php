@@ -14,7 +14,7 @@ namespace LongitudeOne\PropertyBundle;
 use function dirname;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class PropertyBundle extends Bundle
+class LongitudeOnePropertyBundle extends Bundle
 {
     public function getPath(): string
     {

@@ -11,14 +11,14 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit;
 
-use LongitudeOne\PropertyBundle\PropertyBundle;
+use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use PHPUnit\Framework\TestCase;
 
 class PropertyBundleTest extends TestCase
 {
     public function testGetPath(): void
     {
-        $bundle = new PropertyBundle();
+        $bundle = new LongitudeOnePropertyBundle();
         self::assertSame(dirname(__DIR__, 2), $bundle->getPath());
     }
 }

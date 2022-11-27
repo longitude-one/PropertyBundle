@@ -8,5 +8,5 @@ return [
     EasyCorp\Bundle\EasyAdminBundle\EasyAdminBundle::class => ['all' => true],
     Twig\Extra\TwigExtraBundle\TwigExtraBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true, 'test' => true, 'prod' => false],
-    LongitudeOne\PropertyBundle\PropertyBundle::class => ['all' => true],
+    LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle::class => ['all' => true],
 ];

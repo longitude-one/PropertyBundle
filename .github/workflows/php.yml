@@ -60,4 +60,4 @@ jobs:
           path: PropertyBundle/
           level: 9
           configuration: tools/php-stan/php-stan.neon
-          memory-limit: 1G
+          memory_limit: 256M

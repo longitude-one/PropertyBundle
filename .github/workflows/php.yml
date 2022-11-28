@@ -51,15 +51,12 @@ jobs:
       - name: install PHPCSFIXER
         run: composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
 
-      - name: PHP-CS-FIXER test on /src with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
-
-      - name: PHP-CS-FIXER test on /test with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
+      - name: PHP-CS-FIXER test on /PropertyBundle with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix PropertyBundle --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@master
         with:
-          path: src/ tests/
+          path: PropertyBundle/
           level: 9
           configuration: tools/php-stan/php-stan.neon

@@ -23,6 +23,8 @@
         <server name="KERNEL_DIR" value="./PropertyBundle/Tests/App/" />
         <server name="APP_SECRET" value="blaBlaBla" />
         <server name="DATABASE_URL" value="sqlite:///in_memory" />
+        <!-- FIXME We need to ignore the DBALLOGGER deprecation. It is an indirect deprecation until fix -->
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="1" />
     </php>
 
     <testsuites>

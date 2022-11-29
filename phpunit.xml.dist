@@ -29,19 +29,16 @@
 
     <testsuites>
         <testsuite name="Longitude-One Property Bundle Test Suite">
-            <directory suffix="Test.php">./PropertyBundle/Tests/Unit</directory>
-            <directory suffix="Test.php">./PropertyBundle/Tests/Application</directory>
-            <directory suffix="Test.php">./PropertyBundle/Tests/Functional</directory>
+            <directory suffix="Test.php">./tests/Unit</directory>
+            <directory suffix="Test.php">./tests/Application</directory>
+            <directory suffix="Test.php">./tests/Functional</directory>
         </testsuite>
     </testsuites>
 
     <coverage cacheDirectory="./.coverage/cache/">
         <include>
-            <directory suffix=".php">PropertyBundle</directory>
+            <directory suffix=".php">src</directory>
         </include>
-        <exclude>
-            <directory suffix=".php">PropertyBundle/Tests/</directory>
-        </exclude>
         <report>
             <html outputDirectory=".coverage/" />
         </report>

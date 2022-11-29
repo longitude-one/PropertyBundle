@@ -5,7 +5,8 @@ $header = str_replace("%year%", date('Y'), $header);
 
 $finder = PhpCsFixer\Finder::create()
     ->in([
-        __DIR__ . '/../../PropertyBundle/',
+        __DIR__ . '/../../src/',
+        __DIR__ . '/../../tests/',
     ])
 ;
 

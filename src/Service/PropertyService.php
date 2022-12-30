@@ -18,13 +18,14 @@ class PropertyService
     /**
      * @var string[] list of all extendable classes
      */
-    private array $classes;
+    private array $classes = [];
 
     /**
      * @param string[] $classes list of all extendable classes
      */
     public function __construct(array $classes)
     {
+        dd($classes);
         foreach ($classes as $class) {
             if (!class_exists($class)) {
                 throw new ClassNotFoundException('Class "'.$class.'" not found !');

@@ -20,12 +20,10 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
-        ->set('longitude-one.property.service', PropertyService::class)
-        ->args([
-            param('extendable_entities'),
-        ])
-//        ->set('longitude-one.meta.twig-extension', MetaExtension::class)
-//        ->args([service('longitude-one.meta.service')])
-//        ->tag('twig.extension')
+        ->set('longitude-one.property_bundle.property_service', PropertyService::class)
+        ->public()
+        ->arg(0, param('extendable_entities'))
+        ->alias(PropertyService::class, 'longitude-one.property_bundle.property_service')
+        ->public()
     ;
 };

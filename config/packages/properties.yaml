@@ -1,3 +1,4 @@
 longitude_one_property:
     extendable_entities:
         - 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'
+        - 'LongitudeOne\PropertyBundle\Tests\App\Entity\Character'

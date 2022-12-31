@@ -14,16 +14,21 @@ namespace LongitudeOne\PropertyBundle\Tests\App\Controller\Admin;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use LongitudeOne\PropertyBundle\Controller\PropertyControllerTrait;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin')]
 class DashboardController extends AbstractDashboardController
 {
-    public function __construct(private TranslatorInterface $translator)
+    use PropertyControllerTrait;
+
+    public function __construct(private readonly TranslatorInterface $translator)
     {
     }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -38,7 +43,7 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 
-    #[Route('/admin', name: 'admin')]
+    #[Route('/', name: 'admin')]
     public function index(): Response
     {
         return $this->render('admin.html.twig');
@@ -60,11 +65,9 @@ class DashboardController extends AbstractDashboardController
         // return $this->render('some/path/my-dashboard.html.twig');
     }
 
-    #[Route('/admin/properties/classes', name: 'longitudeone_property_tests_app_admin_dashboard_list')]
-    public function list(PropertyService $propertyService): Response
+    #[Route('/properties/classes', name: 'longitudeone_property_tests_app_admin_dashboard_list')]
+    public function listExtendableEntities(PropertyService $propertyService): Response
     {
-        return $this->render('@LongitudeOneProperty/easyadmin/entities-list.html.twig', [
-            'entities' => $propertyService->getEntities(),
-        ]);
+        return $this->renderExtendableEntities($propertyService);
     }
 }

@@ -11,6 +11,6 @@
 
 namespace LongitudeOne\PropertyBundle\Exception;
 
-class ClassNotFoundException extends \InvalidArgumentException
+class EntityNotFoundException extends \InvalidArgumentException
 {
 }

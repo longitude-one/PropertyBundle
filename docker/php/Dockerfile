@@ -1,18 +1,13 @@
 FROM php:8-fpm-alpine
 
-# LOAD PHP.INI development
-# CMD cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
-
 RUN apk --update --no-cache add bash git icu-dev libxslt-dev zip libzip-dev \
         && docker-php-ext-install intl xsl zip \
-        && docker-php-ext-enable intl xsl zip
+        && docker-php-ext-enable intl xsl zip \
+        && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+        && curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
+        && apk add symfony-cli
 
-## Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
-## Install symfony
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
-    && apk add symfony-cli
+##        && cp /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 

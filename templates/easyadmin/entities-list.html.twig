@@ -1,0 +1,29 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% trans_default_domain 'LongitudeOnePropertyBundle' %}
+
+{% block content_title %}{{ 'lopb.entities.manage.title' | trans }}{% endblock %}
+{% block page_actions %}
+{#    <a class="btn btn-primary" href="..."></a>#}
+{% endblock %}
+
+{% block main %}
+    <p class="alert alert-info">{{ 'lopb.entities.manage.help' | trans }}</p>
+    <table class="datagrid">
+        <thead>
+        <tr>
+            <td>{{ 'lopb.entities.name' | trans }}</td>
+            <td>{{ 'lopb.entities.class' | trans }}</td>
+            <td>{{ 'lopb.entities.extendable' | trans }}</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity }}</td>
+                <td>{{ entity }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

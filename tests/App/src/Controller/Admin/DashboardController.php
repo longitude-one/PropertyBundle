@@ -17,9 +17,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DashboardController extends AbstractDashboardController
 {
+    public function __construct(private TranslatorInterface $translator)
+    {
+    }
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -28,8 +32,9 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+        $entities = $this->translator->trans('lopb.menu.extendable-entities', [], 'LongitudeOnePropertyBundle');
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToRoute('Classes', 'fa fa-home', 'longitudeone_property_tests_app_admin_dashboard_list');
+        yield MenuItem::linkToRoute($entities, 'fa fa-home', 'longitudeone_property_tests_app_admin_dashboard_list');
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 
@@ -58,6 +63,8 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin/properties/classes', name: 'longitudeone_property_tests_app_admin_dashboard_list')]
     public function list(PropertyService $propertyService): Response
     {
-        dd($propertyService);
+        return $this->render('@LongitudeOneProperty/easyadmin/entities-list.html.twig', [
+            'entities' => $propertyService->getEntities(),
+        ]);
     }
 }

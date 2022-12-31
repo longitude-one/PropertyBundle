@@ -11,35 +11,34 @@
 
 namespace LongitudeOne\PropertyBundle\Service;
 
-use LongitudeOne\PropertyBundle\Exception\ClassNotFoundException;
+use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 
 class PropertyService
 {
     /**
      * @var string[] list of all extendable classes
      */
-    private array $classes = [];
+    private array $entities = [];
 
     /**
-     * @param string[] $classes list of all extendable classes
+     * @param string[] $entities list of all extendable classes
      */
-    public function __construct(array $classes)
+    public function __construct(array $entities)
     {
-        dd($classes);
-        foreach ($classes as $class) {
-            if (!class_exists($class)) {
-                throw new ClassNotFoundException('Class "'.$class.'" not found !');
+        foreach ($entities as $entity) {
+            if (!class_exists($entity)) {
+                throw new EntityNotFoundException('Entity "'.$entity.'" not found! Did you misspell your entity in the config/properties.yaml file?');
             }
         }
 
-        $this->classes = $classes;
+        $this->entities = $entities;
     }
 
     /**
      * @return string[] $classes list of all extendable classes
      */
-    public function getClasses(): array
+    public function getEntities(): array
     {
-        return $this->classes;
+        return $this->entities;
     }
 }

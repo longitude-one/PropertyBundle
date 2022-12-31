@@ -1,0 +1,6 @@
+lopb.entities.manage.title: 'Extendable entities'
+lopb.entities.manage.help: "This page helps you to determine which entities can be extended. If you don't find your entities in the below list, check that you added it in the extendable_entities section of the config/properties.yaml file."
+lopb.menu.extendable-entities: 'Extendable entities'
+lopb.entities.name: 'Entity'
+lopb.entities.class: 'Class'
+lopb.entities.extendable: 'Extendable'

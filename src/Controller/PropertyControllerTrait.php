@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * This file is part of the LongitudeOne/PropertyBundle
+ *
+ * PHP 8.1 | Symfony 6.1+
+ *
+ * Copyright LongitudeOne - Alexandre Tranchant
+ * Copyright 2021 - 2023
+ */
+
 namespace LongitudeOne\PropertyBundle\Controller;
 
-use LongitudeOne\PropertyBundle\Service\PropertyService;
+use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -10,10 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
  */
 trait PropertyControllerTrait
 {
-    private function renderExtendableEntities(PropertyService $propertyService): Response
+    private function renderExtendableEntities(PropertyContextService $service): Response
     {
         return $this->render('@LongitudeOneProperty/easyadmin/entities-list.html.twig', [
-            'entities' => $propertyService->getEntities(),
+            'ea' => $service->getContext(),
+            'entities' => $service->getEntities(),
         ]);
     }
 }

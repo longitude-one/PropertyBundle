@@ -6,11 +6,12 @@
  * PHP 8.1 | Symfony 6.1+
  *
  * Copyright LongitudeOne - Alexandre Tranchant
- * Copyright 2021 - 2022
+ * Copyright 2021 - 2023
  */
 
 namespace LongitudeOne\PropertyBundle;
 
+use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -45,7 +46,7 @@ class LongitudeOnePropertyBundle extends AbstractBundle
         $loader = new PhpFileLoader($builder, new FileLocator(__DIR__.'/Resources/config/'));
         $loader->load('services.php');
         $container->services()
-            ->get('longitude-one.property_bundle.property_service')
+            ->get(PropertyService::class)
             ->arg(0, $config['extendable_entities']);
 //        dump($container->services()->get('longitude-one.property_bundle.property_service'));
     }

@@ -14,9 +14,8 @@ COPY php.ini /usr/local/etc/php/conf.d/php.ini
 WORKDIR /var/www
 
 ## Install our bundle
-## Start Symfony local server
-
-## Install the libraries
+## Install assets
+## Stop then start Symfony local server
 CMD composer install ; \
     symfony console assets:install ; \
     symfony server:stop --dir /var/www/tests/App/public ; \

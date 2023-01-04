@@ -16,29 +16,41 @@ use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 class PropertyService
 {
     /**
-     * @var string[] list of all extendable classes
+     * @var array<string, array<string, string>> list of all extendable classes
      */
     private array $entities = [];
 
     /**
-     * @param string[] $entities list of all extendable classes
+     * @param array<string, array<string, string>> $entities list of all extendable classes
      */
     public function __construct(array $entities)
     {
-        foreach ($entities as $entity) {
-            if (!class_exists($entity)) {
-                throw new EntityNotFoundException('Entity "'.$entity.'" not found! Did you misspell your entity in the config/properties.yaml file?');
+        foreach ($entities as $keyword => $entity) {
+            if (!class_exists($entity['class'])) {
+                throw new EntityNotFoundException('Class "'.$entity['class'].'" not found! Did you misspell your entity in the config/properties.yaml file?');
             }
-        }
 
-        $this->entities = $entities;
+            $this->entities[$keyword] = $entity;
+        }
     }
 
     /**
-     * @return string[] $classes list of all extendable classes
+     * @return array<string, array<string, string>> $classes list of all extendable classes
      */
     public function getEntities(): array
     {
         return $this->entities;
+    }
+
+    /**
+     * @return array<string, string> definition of entity
+     */
+    public function getEntity(string $keyword): array
+    {
+        if (!key_exists($keyword, $this->entities)) {
+            throw new EntityNotFoundException('Entity "'.$keyword.'" not found! Did you miss to declare your entity in the config/properties.yaml file?');
+        }
+
+        return $this->entities[$keyword];
     }
 }

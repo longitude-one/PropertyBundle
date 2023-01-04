@@ -16,13 +16,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 
 class PropertyContextService
 {
-    private AdminContextProvider $adminContextProvider;
-    private PropertyService $propertyService;
-
-    public function __construct(AdminContextProvider $adminContextProvider, PropertyService $propertyService)
-    {
-        $this->adminContextProvider = $adminContextProvider;
-        $this->propertyService = $propertyService;
+    public function __construct(
+        private readonly AdminContextProvider $adminContextProvider,
+        private readonly PropertyService $propertyService
+    ) {
     }
 
     public function getContext(): ?AdminContext
@@ -31,7 +28,7 @@ class PropertyContextService
     }
 
     /**
-     * @return string[] entities full class name
+     * @return array<string, array<string, string>> entities full class name
      */
     public function getEntities(): array
     {

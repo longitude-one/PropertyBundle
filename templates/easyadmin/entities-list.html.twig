@@ -18,10 +18,11 @@
         </tr>
         </thead>
         <tbody>
-        {% for entity in entities %}
+        {% for keyword, entity in entities %}
             <tr>
-                <td>{{ entity }}</td>
-                <td>{{ entity }}</td>
+                <td>{{ keyword }}</td>
+                <td><code>{{ entity.class }}</code></td>
+                <td></td>
             </tr>
         {% endfor %}
         </tbody>

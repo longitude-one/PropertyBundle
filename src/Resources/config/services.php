@@ -23,7 +23,7 @@ return static function (ContainerConfigurator $container) {
     $container->services()
         ->set(PropertyService::class)
         ->public()
-        ->arg(0, param('extendable_entities'))
+        ->arg(0, []) // param('extendable_entities') is not available yet. This argument will be replaced by extension.
         ->public()
     ;
 

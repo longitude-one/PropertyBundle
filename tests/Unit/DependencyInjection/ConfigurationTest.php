@@ -19,49 +19,6 @@ use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationTest extends TestCase
 {
-    public function testEmptyConfiguration(): void
-    {
-        $metaArray = $this->process('');
-        self::assertSame($metaArray, [
-            'extendable_entities' => [],
-        ]);
-    }
-
-    public function testNonExtendableConfiguration(): void
-    {
-        $metaArray = $this->processFile('config-non-extendable.yaml');
-        self::assertSame($metaArray, [
-            'extendable_entities' => [
-                'empty' => [
-                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool',
-                ],
-                'tool' => [
-                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
-                ],
-            ],
-        ]);
-    }
-
-    public function testNonValidConfiguration(): void
-    {
-        self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('Invalid type for path "longitude_one_property.extendable_entities.0". Expected "array", but got "string"');
-
-        $this->processFile('config-non-valid.yaml');
-    }
-
-    public function testValidConfiguration(): void
-    {
-        $metaArray = $this->processFile('config-valid.yaml');
-        self::assertSame($metaArray, [
-            'extendable_entities' => [
-                'tool' => [
-                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
-                ],
-            ],
-        ]);
-    }
-
     /**
      * @return array<string, mixed>
      */
@@ -93,5 +50,56 @@ class ConfigurationTest extends TestCase
         }
 
         return self::process($content);
+    }
+
+    public function testEmptyConfiguration(): void
+    {
+        $metaArray = self::process('');
+        self::assertSame($metaArray, [
+            'extendable_entities' => [],
+        ]);
+    }
+
+    public function testNoMoreValidConfiguration(): void
+    {
+        self::expectException(InvalidConfigurationException::class);
+        self::expectExceptionMessage('Invalid type for path "longitude_one_property.extendable_entities.0". Expected "array", but got "string"');
+
+        self::processFile('config-no-more-valid.yaml');
+    }
+
+    public function testNonExtendableConfiguration(): void
+    {
+        $metaArray = self::processFile('config-non-extendable.yaml');
+        self::assertSame($metaArray, [
+            'extendable_entities' => [
+                'empty' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool',
+                ],
+                'tool' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
+                ],
+            ],
+        ]);
+    }
+
+    public function testNonValidConfiguration(): void
+    {
+        self::expectException(InvalidConfigurationException::class);
+        self::expectExceptionMessage('Unrecognized option "foo" under "longitude_one_property.extendable_entities.tool');
+
+        self::processFile('config-non-valid.yaml');
+    }
+
+    public function testValidConfiguration(): void
+    {
+        $metaArray = self::processFile('config-valid.yaml');
+        self::assertSame($metaArray, [
+            'extendable_entities' => [
+                'tool' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
+                ],
+            ],
+        ]);
     }
 }

@@ -70,4 +70,10 @@ class PropertyTest extends TestCase
         self::assertSame($this->property, $this->property->setValue(null));
         self::assertNull($this->property->getValue());
     }
+
+    public function testConstructor(): void
+    {
+        self::assertFalse($this->property->isActive());
+        self::assertNull($this->property->getValue());
+    }
 }

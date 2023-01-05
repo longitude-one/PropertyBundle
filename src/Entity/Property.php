@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 
@@ -18,21 +19,30 @@ use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 #[ORM\Table(name: 'lopb_properties')]
 class Property implements PropertyInterface
 {
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $active = false;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $entityClassname;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $entityId;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: 'string', length: 31)]
+    #[ORM\Column(type: Types::STRING, length: 31)]
     private string $name;
 
-    #[ORM\Column(type: 'text')]
+    #[ORM\Column(type: Types::STRING)]
     private string $value;
+
+    public function __construct()
+    {
+        $this->value = serialize(null);
+    }
 
     public function getEntityClassname(): string
     {
@@ -67,6 +77,18 @@ class Property implements PropertyInterface
         }
 
         return null;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->active;
+    }
+
+    public function setActive(bool $active): self
+    {
+        $this->active = $active;
+
+        return $this;
     }
 
     public function setEntity(LinkedInterface $linkedEntity): PropertyInterface

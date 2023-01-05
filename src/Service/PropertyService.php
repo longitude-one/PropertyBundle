@@ -11,7 +11,13 @@
 
 namespace LongitudeOne\PropertyBundle\Service;
 
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
+use LongitudeOne\PropertyBundle\Entity\Property;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
+use LongitudeOne\PropertyBundle\Exception\PropertyNotFoundException;
+use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 
 class PropertyService
 {
@@ -20,10 +26,12 @@ class PropertyService
      */
     private array $entities = [];
 
+    private PropertyRepository|EntityRepository $propertyRepository;
+
     /**
      * @param array<string, array<string, string>> $entities list of all extendable classes
      */
-    public function __construct(array $entities)
+    public function __construct(private EntityManagerInterface $entityManager, array $entities)
     {
         foreach ($entities as $keyword => $entity) {
             if (!class_exists($entity['class'])) {
@@ -32,6 +40,25 @@ class PropertyService
 
             $this->entities[$keyword] = $entity;
         }
+
+        $this->propertyRepository = $this->entityManager->getRepository(Property::class);
+    }
+
+    /**
+     * @throws PropertyNotFoundException
+     */
+    public function activeEntity(LinkedInterface $entity, string $propertyName): Property
+    {
+        $property = $this->propertyRepository->findProperty($entity, $propertyName);
+
+        if (null === $property) {
+            throw new PropertyNotFoundException($propertyName);
+        }
+
+        $property->setActive(true);
+        $this->entityManager->flush();
+
+        return $property;
     }
 
     /**

@@ -21,10 +21,14 @@
         <server name="SYMFONY_PHPUNIT_REMOVE" value="" />
         <server name="SYMFONY_PHPUNIT_VERSION" value="9.5" />
         <server name="KERNEL_DIR" value="./PropertyBundle/Tests/App/" />
-        <server name="APP_SECRET" value="blaBlaBla" />
         <server name="DATABASE_URL" value="sqlite:///in_memory" />
         <!-- FIXME We need to ignore the DBALLOGGER deprecation. It is an indirect deprecation until fix -->
         <env name="SYMFONY_DEPRECATIONS_HELPER" value="1" />
+
+        <!-- ###+ symfony/framework-bundle ### -->
+        <env name="APP_ENV" value="test"/>
+        <env name="APP_SECRET" value="bc956aa4de30170212dc190aa826d67e"/>
+        <!-- ###- symfony/framework-bundle ### -->
     </php>
 
     <testsuites>

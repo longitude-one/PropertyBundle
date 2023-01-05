@@ -1,2 +1,3 @@
 extendable_entities:
-    foo: ['bar']
+    - 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool'
+    - 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'

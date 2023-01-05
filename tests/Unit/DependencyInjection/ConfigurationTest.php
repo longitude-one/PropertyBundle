@@ -32,8 +32,12 @@ class ConfigurationTest extends TestCase
         $metaArray = $this->processFile('config-non-extendable.yaml');
         self::assertSame($metaArray, [
             'extendable_entities' => [
-                'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
-                'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool',
+                'empty' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool',
+                ],
+                'tool' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
+                ],
             ],
         ]);
     }
@@ -41,7 +45,7 @@ class ConfigurationTest extends TestCase
     public function testNonValidConfiguration(): void
     {
         self::expectException(InvalidConfigurationException::class);
-        self::expectExceptionMessage('Invalid type for path "longitude_one_property.extendable_entities.foo". Expected "scalar", but got "array".');
+        self::expectExceptionMessage('Invalid type for path "longitude_one_property.extendable_entities.0". Expected "array", but got "string"');
 
         $this->processFile('config-non-valid.yaml');
     }
@@ -51,7 +55,9 @@ class ConfigurationTest extends TestCase
         $metaArray = $this->processFile('config-valid.yaml');
         self::assertSame($metaArray, [
             'extendable_entities' => [
-                'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
+                'tool' => [
+                    'class' => 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity',
+                ],
             ],
         ]);
     }
@@ -59,7 +65,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<string, mixed>
      */
-    private function process(string $content): array
+    private static function process(string $content): array
     {
         $config = Yaml::parse($content);
 
@@ -77,7 +83,7 @@ class ConfigurationTest extends TestCase
     /**
      * @return array<string, mixed>
      */
-    private function processFile(string $filename): array
+    private static function processFile(string $filename): array
     {
         $file = __DIR__.'/../../Tools/config-samples/'.$filename;
         $content = file_get_contents($file);
@@ -86,6 +92,6 @@ class ConfigurationTest extends TestCase
             self::markTestIncomplete('This test seems to have been not implemented yet. Unable to read file: '.$file);
         }
 
-        return $this->process($content);
+        return self::process($content);
     }
 }

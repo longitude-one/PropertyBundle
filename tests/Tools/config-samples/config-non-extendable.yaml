@@ -1,3 +1,7 @@
 extendable_entities:
-    - 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'
-    - 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool'
+    empty:
+        keyword: 'empty'
+        class: 'LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool'
+    tool:
+        keyword: 'tool'
+        class: 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'

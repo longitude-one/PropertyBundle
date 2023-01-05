@@ -26,6 +26,11 @@ doctrine:
                 alias: App
 
 services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
     Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface:
         #    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
         autowire: true
@@ -34,3 +39,7 @@ services:
         #    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
         autowire: true
         tags: [ 'doctrine.repository_service' ]
+    EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider:
+        public: true
+        arguments:
+          [ '@request_stack' ]

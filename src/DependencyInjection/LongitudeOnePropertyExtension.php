@@ -34,6 +34,6 @@ class LongitudeOnePropertyExtension extends Extension implements ExtensionInterf
         $config = $this->processConfiguration($configuration, $configs);
 
         $definition = $container->getDefinition(PropertyService::class);
-        $definition->replaceArgument(0, $config['extendable_entities']);
+        $definition->replaceArgument(1, $config['extendable_entities']);
     }
 }

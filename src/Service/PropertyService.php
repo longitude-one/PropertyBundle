@@ -31,7 +31,7 @@ class PropertyService
     /**
      * @param array<string, array<string, string>> $entities list of all extendable classes
      */
-    public function __construct(private EntityManagerInterface $entityManager, array $entities)
+    public function __construct(private readonly EntityManagerInterface $entityManager, array $entities)
     {
         foreach ($entities as $keyword => $entity) {
             if (!class_exists($entity['class'])) {

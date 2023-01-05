@@ -32,7 +32,7 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('PropertyBundle Dashbord Tests');
+            ->setTitle('PropertyBundle Dashboard Tests');
     }
 
     public function configureMenuItems(): iterable

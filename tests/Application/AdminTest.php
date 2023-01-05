@@ -21,10 +21,9 @@ class AdminTest extends AppTestCase
 
         // Request a specific page
         $crawler = $client->request('GET', '/admin');
-        $client->followRedirect();
 
         // Validate a successful response and some content
         $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('a', 'PropertyBundle Dashbord Tests');
+        $this->assertSelectorTextContains('a', 'PropertyBundle Dashboard Tests');
     }
 }

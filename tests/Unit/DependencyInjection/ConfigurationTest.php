@@ -12,9 +12,12 @@
 namespace LongitudeOne\PropertyBundle\Tests\Unit\DependencyInjection;
 
 use LongitudeOne\PropertyBundle\DependencyInjection\Configuration;
+use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Yaml\Yaml;
 
 class ConfigurationTest extends TestCase
@@ -29,7 +32,10 @@ class ConfigurationTest extends TestCase
         $configs = [$config];
 
         $processor = new Processor();
-        $metaConfiguration = new Configuration();
+        $metaConfiguration = (new LongitudeOnePropertyBundle())
+            ->getContainerExtension()
+            ->getConfiguration([], new ContainerBuilder(new ParameterBag()))
+        ;
 
         return $processor->processConfiguration(
             $metaConfiguration,

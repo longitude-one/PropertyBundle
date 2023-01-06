@@ -74,6 +74,6 @@
     "symfony": {
       "docker": false
     },
-   "public-dir": "src/tests/App/public"
+   "public-dir": "tests/App/public"
   }
 }

@@ -11,41 +11,22 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
-use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
-use LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity;
+use LongitudeOne\PropertyBundle\Entity\IntegerProperty;
 use PHPUnit\Framework\TestCase;
 
-class PropertyTest extends TestCase
+class IntegerPropertyTest extends TestCase
 {
-    private NonTypedProperty $property;
+    private IntegerProperty $property;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new NonTypedProperty();
-    }
-
-    public function testClassname(): void
-    {
-        $entity = new ToolEntity();
-
-        self::assertSame($this->property, $this->property->setEntity($entity));
-        self::assertSame('LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity', $this->property->getEntityClassname());
-        self::assertSame(0, $this->property->getEntityId());
+        $this->property = new IntegerProperty();
     }
 
     public function testConstructor(): void
     {
-        self::assertFalse($this->property->isActive());
         self::assertNull($this->property->getValue());
-    }
-
-    public function testName(): void
-    {
-        $actual = $expected = 'A name';
-
-        self::assertSame($this->property, $this->property->setName($actual));
-        self::assertSame($expected, $this->property->getName());
     }
 
     public function testValue(): void
@@ -57,20 +38,19 @@ class PropertyTest extends TestCase
         self::assertSame($expected, $this->property->getValue());
 
         // Float
-        $actual = $expected = 42.42;
-
+        $actual = 42.42;
         self::assertSame($this->property, $this->property->setValue($actual));
         self::assertSame($expected, $this->property->getValue());
 
         // string
-        $actual = $expected = 'A string value';
-
+        $actual = '42';
         self::assertSame($this->property, $this->property->setValue($actual));
         self::assertSame($expected, $this->property->getValue());
 
         // bool
-        self::assertSame($this->property, $this->property->setValue(false));
-        self::assertFalse($this->property->getValue());
+        $actual = true;
+        self::assertSame($this->property, $this->property->setValue($actual));
+        self::assertSame(1, $this->property->getValue());
 
         // null
         self::assertSame($this->property, $this->property->setValue(null));

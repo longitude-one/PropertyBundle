@@ -11,7 +11,6 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\DependencyInjection;
 
-use LongitudeOne\PropertyBundle\DependencyInjection\Configuration;
 use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;

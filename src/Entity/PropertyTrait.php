@@ -13,15 +13,9 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 
-#[ORM\Entity(repositoryClass: PropertyRepository::class)]
-#[ORM\Table(name: 'lopb_properties')]
-class Property implements PropertyInterface
+trait PropertyTrait
 {
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $active = false;
-
     #[ORM\Column(type: Types::STRING, length: 255)]
     private string $entityClassname;
 
@@ -35,14 +29,6 @@ class Property implements PropertyInterface
 
     #[ORM\Column(type: Types::STRING, length: 31)]
     private string $name;
-
-    #[ORM\Column(type: Types::STRING)]
-    private string $value;
-
-    public function __construct()
-    {
-        $this->value = serialize(null);
-    }
 
     public function getEntityClassname(): string
     {
@@ -64,33 +50,6 @@ class Property implements PropertyInterface
         return $this->name;
     }
 
-    public function getValue(): bool|float|int|null|string
-    {
-        $value = unserialize($this->value, ['allowed_classes' => false]);
-
-        if (false === $value && $this->value !== serialize(false)) {
-            return null;
-        }
-
-        if (is_bool($value) || is_string($value) || is_int($value) || is_null($value) || is_float($value)) {
-            return $value;
-        }
-
-        return null;
-    }
-
-    public function isActive(): bool
-    {
-        return $this->active;
-    }
-
-    public function setActive(bool $active): self
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
     public function setEntity(LinkedInterface $linkedEntity): PropertyInterface
     {
         $this->entityClassname = $linkedEntity->getLinkedClassname();
@@ -102,13 +61,6 @@ class Property implements PropertyInterface
     public function setName(string $name): PropertyInterface
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function setValue(float|bool|int|string|null $value): PropertyInterface
-    {
-        $this->value = serialize($value);
 
         return $this;
     }

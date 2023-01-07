@@ -11,20 +11,20 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Functional\Repository;
 
-use LongitudeOne\PropertyBundle\Entity\Property;
-use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
+use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
+use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 use LongitudeOne\PropertyBundle\Tests\Functional\DatabaseTestCase;
 use LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity;
 
 class PropertyRepositoryTest extends DatabaseTestCase
 {
-    private PropertyRepository $propertyRepository;
+    private NonTypedPropertyRepository $propertyRepository;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->propertyRepository = $this->getEntityManager()->getRepository(Property::class);
+        $this->propertyRepository = $this->getEntityManager()->getRepository(NonTypedProperty::class);
     }
 
     public function testFindNonExistent(): void

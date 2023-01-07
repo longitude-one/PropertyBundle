@@ -11,10 +11,9 @@
 
 namespace LongitudeOne\PropertyBundle\DependencyInjection\Loader\Configurator;
 
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
-use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
+use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -24,7 +23,7 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container) {
     $container->services()
-        ->set(PropertyRepository::class)
+        ->set(NonTypedPropertyRepository::class)
         ->arg(0, service(ManagerRegistry::class))
         ->tag('doctrine.repository_service')
     ;

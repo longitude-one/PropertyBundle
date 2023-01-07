@@ -13,7 +13,6 @@ namespace LongitudeOne\PropertyBundle\Tests\Functional;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\SchemaTool;
-use LogicException;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class DatabaseTestCase extends WebTestCase
@@ -21,7 +20,7 @@ class DatabaseTestCase extends WebTestCase
     private ?EntityManagerInterface $entityManager;
 
     /**
-     * @throws LogicException
+     * @throws \LogicException
      */
     protected function setUp(): void
     {
@@ -52,7 +51,7 @@ class DatabaseTestCase extends WebTestCase
         $this->entityManager = $kernel->getContainer()->get('doctrine.orm.entity_manager');
 
         if (null === $this->entityManager) {
-            throw new LogicException('Unable to load doctrine service. Check your test config!');
+            throw new \LogicException('Unable to load doctrine service. Check your test config!');
         }
 
         $metaData = $this->entityManager->getMetadataFactory()->getAllMetadata();

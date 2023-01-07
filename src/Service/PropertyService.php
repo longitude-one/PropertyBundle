@@ -12,9 +12,9 @@
 namespace LongitudeOne\PropertyBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\EntityRepository;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
+use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 use LongitudeOne\PropertyBundle\Exception\PropertyNotFoundException;
 use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
@@ -26,7 +26,7 @@ class PropertyService
      */
     private array $entities = [];
 
-    private NonTypedPropertyRepository|EntityRepository $propertyRepository;
+    private NonTypedPropertyRepository $propertyRepository;
 
     /**
      * @param array<string, array<string, string>> $entities list of all extendable classes
@@ -47,7 +47,7 @@ class PropertyService
     /**
      * @throws PropertyNotFoundException
      */
-    public function activeEntity(LinkedInterface $entity, string $propertyName): NonTypedProperty
+    public function activeEntity(LinkedInterface $entity, string $propertyName): PropertyInterface
     {
         $property = $this->propertyRepository->findProperty($entity, $propertyName);
 

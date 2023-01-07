@@ -11,14 +11,9 @@
 
 namespace LongitudeOne\PropertyBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use LongitudeOne\PropertyBundle\Entity\FloatProperty;
-use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 
-/**
- * @extends ServiceEntityRepository<PropertyInterface>
- */
 class FloatPropertyRepository extends AbstractPropertyRepository
 {
     public function __construct(ManagerRegistry $registry)

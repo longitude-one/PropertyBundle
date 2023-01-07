@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\DependencyInjection;
 
+use LongitudeOne\PropertyBundle\DependencyInjection\LongitudeOnePropertyExtension;
 use LongitudeOne\PropertyBundle\LongitudeOnePropertyBundle;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
@@ -27,17 +28,24 @@ class ConfigurationTest extends TestCase
     private static function process(string $content): array
     {
         $config = Yaml::parse($content);
-
         $configs = [$config];
 
         $processor = new Processor();
-        $metaConfiguration = (new LongitudeOnePropertyBundle())
-            ->getContainerExtension()
-            ->getConfiguration([], new ContainerBuilder(new ParameterBag()))
-        ;
+        $bundle = new LongitudeOnePropertyBundle();
+        $containerExtension = $bundle->getContainerExtension();
+
+        if (!$containerExtension instanceof LongitudeOnePropertyExtension) {
+            self::fail('Unable to load the Longitude-One Property extension. Test failed!');
+        }
+
+        $configuration = $containerExtension->getConfiguration([], new ContainerBuilder(new ParameterBag()));
+
+        if (null === $configuration) {
+            self::fail('Unable to load the LongitudeOnePropertyBundle configuration. Test failed!');
+        }
 
         return $processor->processConfiguration(
-            $metaConfiguration,
+            $configuration,
             $configs
         );
     }

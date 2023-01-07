@@ -11,14 +11,9 @@
 
 namespace LongitudeOne\PropertyBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Entity\StringProperty;
 
-/**
- * @extends ServiceEntityRepository<PropertyInterface>
- */
 class StringPropertyRepository extends AbstractPropertyRepository
 {
     public function __construct(ManagerRegistry $registry)

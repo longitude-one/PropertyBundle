@@ -10,8 +10,8 @@ jobs:
     runs-on: 'ubuntu-latest'
     strategy:
       matrix:
-        php: [ '8.1' ]
-        symfony: ['6.1']
+        php: [ '8.1', '8.2' ]
+        symfony: ['6.2']
 
     name: With PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
     steps:

@@ -20,7 +20,7 @@ doctrine:
         mappings:
             App:
                 is_bundle: false
-                type: annotation
+                type: attribute
                 dir: '%kernel.project_dir%/tests/App/src/Entity'
                 prefix: 'App\Entity'
                 alias: App
@@ -31,14 +31,6 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
-    Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface:
-        #    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
-        autowire: true
-        tags: [ 'doctrine.repository_service' ]
-    LongitudeOne\PropertyBundle\Repository\PropertyRepository:
-        #    : vendor/doctrine/doctrine-bundle/Repository/ServiceEntityRepository.php
-        autowire: true
-        tags: [ 'doctrine.repository_service' ]
     EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider:
         public: true
         arguments:

@@ -4,3 +4,7 @@ lopb.menu.extendable-entities: 'Extendable entities'
 lopb.entities.name: 'Entity'
 lopb.entities.class: 'Class'
 lopb.entities.extendable: 'Extendable'
+lopb:
+    entities:
+        actions: 'LongitudeOnePropertyBundle'
+        show: 'LongitudeOnePropertyBundle'

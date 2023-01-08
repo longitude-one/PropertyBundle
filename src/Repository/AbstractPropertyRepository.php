@@ -42,8 +42,15 @@ abstract class AbstractPropertyRepository extends ServiceEntityRepository implem
     {
         return $this->findOneBy([
             'entityId' => $linkedEntity->getLinkedId(),
-            'entityClassname' => $linkedEntity->getLinkedId(),
+            'entityClassname' => $linkedEntity->getLinkedClassname(),
             'name' => $propertyName,
+        ]);
+    }
+
+    public function findByEntityClassName(string $entityClassName): ?PropertyInterface
+    {
+        return $this->findOneBy([
+            'entityClassname' => $entityClassName,
         ]);
     }
 

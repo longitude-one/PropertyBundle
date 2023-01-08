@@ -11,11 +11,14 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\App\Controller\Admin;
 
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use LongitudeOne\PropertyBundle\Controller\PropertyControllerTrait;
+use LongitudeOne\PropertyBundle\Entity\BoolProperty;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
+use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -69,5 +72,14 @@ class DashboardController extends AbstractDashboardController
     public function listExtendableEntities(PropertyContextService $service): Response
     {
         return $this->renderExtendableEntities($service);
+    }
+
+    #[Route('/properties/classes/{keyword}', name: 'longitudeone_property_tests_app_admin_dashboard_show_entity')]
+    public function showExtendableEntity(PropertyService $propertyService, EntityManagerInterface $em, string $keyword): Response
+    {
+        $entityDefinition = $propertyService->getEntity($keyword);
+        $boolRepository = $em->getRepository(BoolProperty::class);
+        $entity = $boolRepository->findByEntityClassName($entityDefinition['class']);
+        dd($entity);
     }
 }

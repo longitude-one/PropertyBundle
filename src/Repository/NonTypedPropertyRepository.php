@@ -14,7 +14,7 @@ namespace LongitudeOne\PropertyBundle\Repository;
 use Doctrine\Persistence\ManagerRegistry;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 
-class NonTypedPropertyRepository extends AbstractPropertyRepository
+class NonTypedPropertyRepository extends PropertyRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

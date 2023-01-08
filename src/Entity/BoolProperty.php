@@ -16,17 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 
 #[ORM\Entity(repositoryClass: BoolPropertyRepository::class)]
-#[ORM\Table(name: 'lopb_properties_bool')]
-#[ORM\Index(columns: ['value'], name: 'lopb_index_bool_property_value')]
-#[ORM\Index(columns: ['id', 'name', 'entity_classname'], name: 'lopb_index_bool_property_link')]
-#[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_bool_property_property')]
-#[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_bool_property_entity')]
-class BoolProperty implements PropertyInterface
+class BoolProperty extends AbstractProperty implements PropertyInterface
 {
-    use EnabledTrait;
-    use PropertyTrait;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(name: 'bool_value', type: Types::BOOLEAN)]
     private ?bool $value = null;
 
     public function getValue(): ?bool
@@ -34,7 +26,7 @@ class BoolProperty implements PropertyInterface
         return $this->value;
     }
 
-    public function setValue(int|string|float|bool|null $value): PropertyInterface
+    public function setValue(int|string|float|bool|null $value): self
     {
         if (null === $value) {
             $this->value = null;

@@ -16,17 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
 
 #[ORM\Entity(repositoryClass: FloatPropertyRepository::class)]
-#[ORM\Table(name: 'lopb_properties_float')]
-#[ORM\Index(columns: ['value'], name: 'lopb_index_float_property_value')]
-#[ORM\Index(columns: ['id', 'name', 'entity_classname'], name: 'lopb_index_float_property_link')]
-#[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_float_property_property')]
-#[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_float_property_entity')]
-class FloatProperty implements PropertyInterface
+class FloatProperty extends AbstractProperty implements PropertyInterface
 {
-    use EnabledTrait;
-    use PropertyTrait;
-
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(name: 'float_value', type: Types::FLOAT)]
     private ?float $value = null;
 
     public function getValue(): ?float

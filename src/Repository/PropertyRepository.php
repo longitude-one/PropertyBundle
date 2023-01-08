@@ -19,7 +19,7 @@ use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 /**
  * @extends ServiceEntityRepository<PropertyInterface>
  */
-abstract class AbstractPropertyRepository extends ServiceEntityRepository implements PropertyRepositoryInterface
+class PropertyRepository extends ServiceEntityRepository implements PropertyRepositoryInterface
 {
     /**
      * @return array<int,PropertyInterface>

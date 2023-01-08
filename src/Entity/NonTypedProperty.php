@@ -16,16 +16,9 @@ use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 
 #[ORM\Entity(repositoryClass: NonTypedPropertyRepository::class)]
-#[ORM\Table(name: 'lopb_properties')]
-#[ORM\Index(columns: ['id', 'name', 'entity_classname'], name: 'lopb_index_property_link')]
-#[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_property_property')]
-#[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_property_entity')]
-class NonTypedProperty implements PropertyInterface
+class NonTypedProperty extends AbstractProperty implements PropertyInterface
 {
-    use EnabledTrait;
-    use PropertyTrait;
-
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(name: 'non_typed_value', type: Types::TEXT)]
     private string $value;
 
     public function __construct()

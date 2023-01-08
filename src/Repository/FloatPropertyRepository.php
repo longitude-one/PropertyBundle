@@ -14,7 +14,7 @@ namespace LongitudeOne\PropertyBundle\Repository;
 use Doctrine\Persistence\ManagerRegistry;
 use LongitudeOne\PropertyBundle\Entity\FloatProperty;
 
-class FloatPropertyRepository extends AbstractPropertyRepository
+class FloatPropertyRepository extends PropertyRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

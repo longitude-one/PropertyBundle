@@ -36,7 +36,7 @@ class PropertyTest extends TestCase
 
     public function testConstructor(): void
     {
-        self::assertFalse($this->property->isActive());
+        self::assertFalse($this->property->isEnabled());
         self::assertNull($this->property->getValue());
     }
 

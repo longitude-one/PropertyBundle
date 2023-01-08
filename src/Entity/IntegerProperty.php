@@ -23,7 +23,7 @@ use LongitudeOne\PropertyBundle\Repository\IntegerPropertyRepository;
 #[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_integer_property_entity')]
 class IntegerProperty implements PropertyInterface
 {
-    use ActiveTrait;
+    use EnabledTrait;
     use PropertyTrait;
 
     #[ORM\Column(type: Types::INTEGER)]

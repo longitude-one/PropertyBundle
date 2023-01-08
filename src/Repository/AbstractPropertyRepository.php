@@ -19,12 +19,12 @@ use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 /**
  * @extends ServiceEntityRepository<PropertyInterface>
  */
-abstract class AbstractPropertyRepository extends ServiceEntityRepository
+abstract class AbstractPropertyRepository extends ServiceEntityRepository implements PropertyRepositoryInterface
 {
     /**
      * @return array<int,PropertyInterface>
      */
-    public function findAllProperties(LinkedInterface $linkedEntity): iterable
+    public function findByEntity(LinkedInterface $linkedEntity): iterable
     {
         $properties = $this->findBy([
             'entityId' => $linkedEntity->getLinkedId(),
@@ -38,12 +38,30 @@ abstract class AbstractPropertyRepository extends ServiceEntityRepository
         return $properties;
     }
 
-    public function findProperty(LinkedInterface $linkedEntity, string $propertyName): ?PropertyInterface
+    public function findByEntityAndName(LinkedInterface $linkedEntity, string $propertyName): ?PropertyInterface
     {
         return $this->findOneBy([
             'entityId' => $linkedEntity->getLinkedId(),
             'entityClassname' => $linkedEntity->getLinkedId(),
             'name' => $propertyName,
         ]);
+    }
+
+    public function remove(PropertyInterface $property, bool $flush = false): void
+    {
+        $this->getEntityManager()->remove($property);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+    public function save(PropertyInterface $property, bool $flush = false): void
+    {
+        $this->getEntityManager()->persist($property);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
     }
 }

@@ -14,19 +14,19 @@ namespace LongitudeOne\PropertyBundle\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-trait ActiveTrait
+trait EnabledTrait
 {
     #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $active = false;
+    private bool $enabled = false;
 
-    public function isActive(): bool
+    public function isEnabled(): bool
     {
-        return $this->active;
+        return $this->enabled;
     }
 
-    public function setActive(bool $active): self
+    public function setEnabled(bool $enabled): self
     {
-        $this->active = $active;
+        $this->enabled = $enabled;
 
         return $this;
     }

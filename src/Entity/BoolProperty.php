@@ -23,7 +23,7 @@ use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 #[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_bool_property_entity')]
 class BoolProperty implements PropertyInterface
 {
-    use ActiveTrait;
+    use EnabledTrait;
     use PropertyTrait;
 
     #[ORM\Column(type: Types::BOOLEAN)]

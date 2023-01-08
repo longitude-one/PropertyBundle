@@ -23,7 +23,7 @@ use LongitudeOne\PropertyBundle\Repository\StringPropertyRepository;
 #[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_string_property_entity')]
 class StringProperty implements PropertyInterface
 {
-    use ActiveTrait;
+    use EnabledTrait;
     use PropertyTrait;
 
     #[ORM\Column(type: Types::STRING)]

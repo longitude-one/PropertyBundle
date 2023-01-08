@@ -17,7 +17,7 @@ use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 use LongitudeOne\PropertyBundle\Exception\PropertyNotFoundException;
-use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
+use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
 
 class PropertyService
 {
@@ -26,7 +26,7 @@ class PropertyService
      */
     private array $entities = [];
 
-    private NonTypedPropertyRepository $propertyRepository;
+    private PropertyRepositoryInterface $propertyRepository;
 
     /**
      * @param array<string, array<string, string>> $entities list of all extendable classes
@@ -47,18 +47,17 @@ class PropertyService
     /**
      * @throws PropertyNotFoundException
      */
-    public function activeEntity(LinkedInterface $entity, string $propertyName): PropertyInterface
+    public function disableProperty(LinkedInterface $entity, string $propertyName, bool $flush = false): PropertyInterface
     {
-        $property = $this->propertyRepository->findProperty($entity, $propertyName);
+        return $this->setPropertyEnable(false, $entity, $propertyName, $flush);
+    }
 
-        if (null === $property) {
-            throw new PropertyNotFoundException($propertyName);
-        }
-
-        $property->setActive(true);
-        $this->entityManager->flush();
-
-        return $property;
+    /**
+     * @throws PropertyNotFoundException
+     */
+    public function enableProperty(LinkedInterface $entity, string $propertyName, bool $flush = false): PropertyInterface
+    {
+        return $this->setPropertyEnable(true, $entity, $propertyName, $flush);
     }
 
     /**
@@ -79,5 +78,25 @@ class PropertyService
         }
 
         return $this->entities[$keyword];
+    }
+
+    /**
+     * @throws PropertyNotFoundException
+     */
+    private function setPropertyEnable(bool $active, LinkedInterface $entity, string $propertyName, bool $flush): PropertyInterface
+    {
+        $property = $this->propertyRepository->findByEntityAndName($entity, $propertyName);
+
+        if (null === $property) {
+            throw new PropertyNotFoundException($propertyName);
+        }
+
+        $property->setEnabled($active);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+
+        return $property;
     }
 }

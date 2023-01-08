@@ -23,7 +23,7 @@ use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
 #[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_float_property_entity')]
 class FloatProperty implements PropertyInterface
 {
-    use ActiveTrait;
+    use EnabledTrait;
     use PropertyTrait;
 
     #[ORM\Column(type: Types::FLOAT)]

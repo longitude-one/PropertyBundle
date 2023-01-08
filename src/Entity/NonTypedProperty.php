@@ -22,7 +22,7 @@ use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 #[ORM\Index(columns: ['entity_classname', 'name'], name: 'lopb_index_property_entity')]
 class NonTypedProperty implements PropertyInterface
 {
-    use ActiveTrait;
+    use EnabledTrait;
     use PropertyTrait;
 
     #[ORM\Column(type: Types::TEXT)]

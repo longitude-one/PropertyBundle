@@ -21,9 +21,9 @@ interface PropertyInterface
 
     public function getValue(): bool|float|int|null|string;
 
-    public function isActive(): bool;
+    public function isEnabled(): bool;
 
-    public function setActive(bool $active): self;
+    public function setEnabled(bool $enabled): self;
 
     public function setEntity(LinkedInterface $linkedEntity): self;
 

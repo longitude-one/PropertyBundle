@@ -30,7 +30,7 @@ class PropertyRepositoryTest extends DatabaseTestCase
     public function testFindNonExistent(): void
     {
         $linkedEntity = new ToolEntity();
-        self::assertNull($this->propertyRepository->findProperty($linkedEntity, 'foo'));
-        self::assertCount(0, $this->propertyRepository->findAllProperties($linkedEntity));
+        self::assertNull($this->propertyRepository->findByEntityAndName($linkedEntity, 'foo'));
+        self::assertCount(0, $this->propertyRepository->findByEntity($linkedEntity));
     }
 }

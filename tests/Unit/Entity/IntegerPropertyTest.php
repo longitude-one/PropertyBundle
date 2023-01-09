@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\IntegerProperty;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ class IntegerPropertyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new IntegerProperty();
+        $this->property = new IntegerProperty(new Definition());
     }
 
     public function testConstructor(): void

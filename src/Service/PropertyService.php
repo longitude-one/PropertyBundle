@@ -12,11 +12,8 @@
 namespace LongitudeOne\PropertyBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
-use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
-use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
-use LongitudeOne\PropertyBundle\Exception\PropertyNotFoundException;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
 
 class PropertyService
@@ -45,22 +42,6 @@ class PropertyService
     }
 
     /**
-     * @throws PropertyNotFoundException
-     */
-    public function disableProperty(LinkedInterface $entity, string $propertyName, bool $flush = false): PropertyInterface
-    {
-        return $this->setPropertyEnable(false, $entity, $propertyName, $flush);
-    }
-
-    /**
-     * @throws PropertyNotFoundException
-     */
-    public function enableProperty(LinkedInterface $entity, string $propertyName, bool $flush = false): PropertyInterface
-    {
-        return $this->setPropertyEnable(true, $entity, $propertyName, $flush);
-    }
-
-    /**
      * @return array<string, array<string, string>> $classes list of all extendable classes
      */
     public function getEntities(): array
@@ -78,25 +59,5 @@ class PropertyService
         }
 
         return $this->entities[$keyword];
-    }
-
-    /**
-     * @throws PropertyNotFoundException
-     */
-    private function setPropertyEnable(bool $active, LinkedInterface $entity, string $propertyName, bool $flush): PropertyInterface
-    {
-        $property = $this->propertyRepository->findByEntityAndName($entity, $propertyName);
-
-        if (null === $property) {
-            throw new PropertyNotFoundException($propertyName);
-        }
-
-        $property->setEnabled($active);
-
-        if ($flush) {
-            $this->entityManager->flush();
-        }
-
-        return $property;
     }
 }

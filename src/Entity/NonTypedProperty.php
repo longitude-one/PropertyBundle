@@ -21,8 +21,9 @@ class NonTypedProperty extends AbstractProperty implements PropertyInterface
     #[ORM\Column(name: 'non_typed_value', type: Types::TEXT)]
     private string $value;
 
-    public function __construct()
+    public function __construct(DefinitionInterface $definition)
     {
+        parent::__construct($definition);
         $this->value = serialize(null);
     }
 

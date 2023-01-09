@@ -12,6 +12,7 @@
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
 use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use PHPUnit\Framework\TestCase;
 
 class BoolPropertyTest extends TestCase
@@ -21,7 +22,7 @@ class BoolPropertyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new BoolProperty();
+        $this->property = new BoolProperty(new Definition());
     }
 
     public function testConstructor(): void

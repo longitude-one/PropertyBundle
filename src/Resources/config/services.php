@@ -17,6 +17,7 @@ use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\IntegerPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
+use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\StringPropertyRepository;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
@@ -31,6 +32,7 @@ return static function (ContainerConfigurator $container) {
         FloatPropertyRepository::class,
         IntegerPropertyRepository::class,
         NonTypedPropertyRepository::class,
+        PropertyRepository::class,
         StringPropertyRepository::class,
     ];
 

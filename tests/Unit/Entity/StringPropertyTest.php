@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\StringProperty;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ class StringPropertyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new StringProperty();
+        $this->property = new StringProperty(new Definition());
     }
 
     public function testConstructor(): void

@@ -11,8 +11,8 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
-use LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity;
 use PHPUnit\Framework\TestCase;
 
 class PropertyTest extends TestCase
@@ -22,30 +22,12 @@ class PropertyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new NonTypedProperty();
-    }
-
-    public function testClassname(): void
-    {
-        $entity = new ToolEntity();
-
-        self::assertSame($this->property, $this->property->setEntity($entity));
-        self::assertSame('LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity', $this->property->getEntityClassname());
-        self::assertSame(0, $this->property->getEntityId());
+        $this->property = new NonTypedProperty(new Definition());
     }
 
     public function testConstructor(): void
     {
-        self::assertFalse($this->property->isEnabled());
         self::assertNull($this->property->getValue());
-    }
-
-    public function testName(): void
-    {
-        $actual = $expected = 'A name';
-
-        self::assertSame($this->property, $this->property->setName($actual));
-        self::assertSame($expected, $this->property->getName());
     }
 
     public function testValue(): void

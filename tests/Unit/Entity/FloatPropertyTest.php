@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\FloatProperty;
 use PHPUnit\Framework\TestCase;
 
@@ -21,7 +22,7 @@ class FloatPropertyTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new FloatProperty();
+        $this->property = new FloatProperty(new Definition());
     }
 
     public function testConstructor(): void

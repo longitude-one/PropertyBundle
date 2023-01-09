@@ -12,6 +12,8 @@
 namespace LongitudeOne\PropertyBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
@@ -22,14 +24,28 @@ use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 class PropertyRepository extends ServiceEntityRepository implements PropertyRepositoryInterface
 {
     /**
+     * @param class-string<PropertyInterface> $entityClass The class name of the entity this repository manages
+     */
+    public function __construct(ManagerRegistry $registry, string $entityClass = AbstractProperty::class)
+    {
+        parent::__construct($registry, $entityClass);
+    }
+
+    /**
      * @return array<int,PropertyInterface>
      */
     public function findByEntity(LinkedInterface $linkedEntity): iterable
     {
-        $properties = $this->findBy([
-            'entityId' => $linkedEntity->getLinkedId(),
-            'entityClassname' => $linkedEntity->getLinkedId(),
-        ]);
+        /** @var array<int,PropertyInterface> $properties */
+        $properties = $this->createQueryBuilder('p')
+            ->join('p.definition', 'd')
+            ->where('p.entityId = :entityId')
+            ->andWhere('d.entityClassname = :className')
+            ->setParameter('entityId', $linkedEntity->getLinkedId())
+            ->setParameter('className', $linkedEntity->getLinkedClassname())
+            ->getQuery()
+            ->getResult()
+        ;
 
         if ($linkedEntity instanceof ExtendableInterface) {
             $linkedEntity->setProperties($properties);
@@ -38,20 +54,36 @@ class PropertyRepository extends ServiceEntityRepository implements PropertyRepo
         return $properties;
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException TODO Create uniq index to avoid this kind of bug
+     */
     public function findByEntityAndName(LinkedInterface $linkedEntity, string $propertyName): ?PropertyInterface
     {
-        return $this->findOneBy([
-            'entityId' => $linkedEntity->getLinkedId(),
-            'entityClassname' => $linkedEntity->getLinkedClassname(),
-            'name' => $propertyName,
-        ]);
+        return $this->createQueryBuilder('p')
+            ->join('p.definition', 'd')
+            ->where('p.entityId = :entityId')
+            ->andWhere('d.entityClassname = :className')
+            ->andWhere('d.name = :propertyName')
+            ->setParameter('entityId', $linkedEntity->getLinkedId())
+            ->setParameter('className', $linkedEntity->getLinkedClassname())
+            ->setParameter('propertyName', $propertyName)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
     }
 
-    public function findByEntityClassName(string $entityClassName): ?PropertyInterface
+    /**
+     * @return array<int,PropertyInterface>
+     */
+    public function findByEntityClassName(string $entityClassName): iterable
     {
-        return $this->findOneBy([
-            'entityClassname' => $entityClassName,
-        ]);
+        return $this->createQueryBuilder('p')
+            ->join('p.definition', 'd')
+            ->andWhere('d.entityClassname = :className')
+            ->setParameter('className', $entityClassName)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     public function remove(PropertyInterface $property, bool $flush = false): void

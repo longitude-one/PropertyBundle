@@ -11,6 +11,7 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 use LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity;
 use PHPUnit\Framework\TestCase;
@@ -27,8 +28,8 @@ class ExtandableTraitTest extends TestCase
 
     public function testGetProperties(): void
     {
-        $properties[] = new NonTypedProperty();
-        $properties[] = new NonTypedProperty();
+        $properties[] = new NonTypedProperty(new Definition());
+        $properties[] = new NonTypedProperty(new Definition());
 
         self::assertSame($this->entity, $this->entity->setProperties($properties));
         self::assertSame($properties, $this->entity->getProperties());

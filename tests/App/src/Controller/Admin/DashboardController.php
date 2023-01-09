@@ -16,7 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use LongitudeOne\PropertyBundle\Controller\PropertyControllerTrait;
-use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\HttpFoundation\Response;
@@ -78,8 +78,8 @@ class DashboardController extends AbstractDashboardController
     public function showExtendableEntity(PropertyService $propertyService, EntityManagerInterface $em, string $keyword): Response
     {
         $entityDefinition = $propertyService->getEntity($keyword);
-        $boolRepository = $em->getRepository(BoolProperty::class);
-        $entity = $boolRepository->findByEntityClassName($entityDefinition['class']);
-        dd($entity);
+        $repository = $em->getRepository(AbstractProperty::class);
+        $properties = $repository->findByEntityClassName($entityDefinition['class']);
+        dd($properties);
     }
 }

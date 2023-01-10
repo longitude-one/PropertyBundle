@@ -42,6 +42,20 @@ class PropertyService
     }
 
     /**
+     * @return array<string, string>
+     */
+    public function getAssociativeArray(): array
+    {
+        $associativeArray = [];
+
+        foreach ($this->entities as $keyword => $entity) {
+            $associativeArray[$keyword] = $entity['class'];
+        }
+
+        return $associativeArray;
+    }
+
+    /**
      * @return array<string, array<string, string>> $classes list of all extendable classes
      */
     public function getEntities(): array

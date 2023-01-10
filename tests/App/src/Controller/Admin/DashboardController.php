@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use LongitudeOne\PropertyBundle\Controller\PropertyControllerTrait;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class DashboardController extends AbstractDashboardController
         $entities = $this->translator->trans('lopb.menu.extendable-entities', [], 'LongitudeOnePropertyBundle');
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToRoute($entities, 'fa-solid fa-wand-magic-sparkles', 'longitudeone_property_tests_app_admin_dashboard_list');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Definitions', 'fas fa-list', Definition::class);
     }
 
     #[Route('/', name: 'admin')]

@@ -32,3 +32,18 @@ parameters:
 			message: "#^Call to an undefined method Symfony\\\\Component\\\\Config\\\\Definition\\\\Builder\\\\NodeDefinition\\:\\:children\\(\\)\\.$#"
 			count: 1
 			path: ../../src/DependencyInjection/Configuration.php
+
+		-
+			message: "#^Method LongitudeOne\\\\PropertyBundle\\\\Repository\\\\PropertyRepository\\:\\:findByEntityAndName\\(\\) should return LongitudeOne\\\\PropertyBundle\\\\Entity\\\\PropertyInterface\\|null but returns mixed\\.$#"
+			count: 1
+			path: ../../src/Repository/PropertyRepository.php
+
+		-
+			message: "#^Method LongitudeOne\\\\PropertyBundle\\\\Repository\\\\PropertyRepository\\:\\:findByEntityClassName\\(\\) should return iterable\\<int, LongitudeOne\\\\PropertyBundle\\\\Entity\\\\PropertyInterface\\> but returns mixed\\.$#"
+			count: 1
+			path: ../../src/Repository/PropertyRepository.php
+
+		-
+			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\Service\\\\PropertyService\\:\\:\\$propertyRepository is never read, only written\\.$#"
+			count: 1
+			path: ../../src/Service/PropertyService.php

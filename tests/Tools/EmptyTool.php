@@ -11,6 +11,10 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Tools;
 
-class EmptyTool
+class EmptyTool implements \Stringable
 {
+    public function __toString()
+    {
+        return 'foo';
+    }
 }

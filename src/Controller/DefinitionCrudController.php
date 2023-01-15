@@ -50,19 +50,31 @@ class DefinitionCrudController extends AbstractCrudController
             ->setHelp('index', $this->trans('lopb.definition.index.help'))
             ->setHelp('edit', $this->trans('lopb.definition.edit.help'))
             ->setHelp('new', $this->trans('lopb.definition.new.help'))
+
+//            ->setFormOptions([
+//                'validation_groups' => ['Default']
+//            ])
         ;
     }
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(),
+            IdField::new('id')->hideOnForm()
+                ->setHelp('lopb.definition.field.id.help')
+                ->setLabel('lopb.definition.field.id.help'),
             TextField::new('name')
-                ->setMaxLength(31),
+                ->setMaxLength(31)
+                ->setHelp('lopb.definition.field.name.help')
+                ->setLabel('lopb.definition.field.name.help'),
             ChoiceField::new('entityClassname')
+                ->setHelp('lopb.definition.field.entityClassname.help')
+                ->setLabel('lopb.definition.field.entityClassname.help')
                 ->setChoices($this->propertyService->getAssociativeArray())
                 ->onlyWhenCreating(),
-            BooleanField::new('enabled'),
+            BooleanField::new('enabled')
+                ->setHelp('lopb.definition.field.enabled.help')
+                ->setLabel('lopb.definition.field.enabled.help')
         ];
     }
 

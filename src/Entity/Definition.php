@@ -15,10 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
-use Symfony\Component\Validator\Constraints as Assert;
 use LongitudeOne\PropertyBundle\Validator as LongitudeOneAssert;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 // TODO Index lopb_index_definition_name shall be uniq!
 #[ORM\Entity(repositoryClass: DefinitionRepository::class)]
@@ -52,6 +52,11 @@ class Definition implements DefinitionInterface
     public function __construct()
     {
         $this->properties = new ArrayCollection();
+    }
+
+    public static function loadValidatorMetadata(ClassMetadata $metadata): void
+    {
+        $metadata->addPropertyConstraint('name', new LongitudeOneAssert\Keyword());
     }
 
     public function addProperty(PropertyInterface $property): self
@@ -135,10 +140,5 @@ class Definition implements DefinitionInterface
         $this->name = $name;
 
         return $this;
-    }
-
-    public static function loadValidatorMetadata(ClassMetadata $metadata)
-    {
-        $metadata->addPropertyConstraint('name', new LongitudeOneAssert\Keyword());
     }
 }

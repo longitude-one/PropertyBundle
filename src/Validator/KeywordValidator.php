@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class KeywordValidator extends ConstraintValidator
 {
-    public function validate(mixed $value, Constraint $constraint)
+    public function validate(mixed $value, Constraint $constraint): void
     {
         if (!$constraint instanceof Keyword) {
             throw new UnexpectedTypeException($constraint, Keyword::class);
@@ -31,7 +31,7 @@ class KeywordValidator extends ConstraintValidator
         }
 
         // the argument must be a string or an object implementing __toString()
-        if (is_array($value) || is_object($value) && !$value instanceof \Stringable) {
+        if (!is_string($value)) {
             // throw this exception if your validator cannot handle the passed type so that it can be marked as invalid
             throw new UnexpectedValueException($value, 'string');
         }

@@ -12,7 +12,6 @@
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Validator;
 
 use LongitudeOne\PropertyBundle\Tests\Tools\EmptyTool;
-use LongitudeOne\PropertyBundle\Validator\InstanceOfExtendableValidator;
 use LongitudeOne\PropertyBundle\Validator\Keyword;
 use LongitudeOne\PropertyBundle\Validator\KeywordValidator;
 use Symfony\Component\Validator\Constraints\Blank;
@@ -21,7 +20,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 use Symfony\Component\Validator\Test\ConstraintValidatorTestCase;
 
 /**
- * @extends ConstraintValidatorTestCase<InstanceOfExtendableValidator>
+ * @extends ConstraintValidatorTestCase<KeywordValidator>
  */
 class KeywordValidatorTest extends ConstraintValidatorTestCase
 {

@@ -74,7 +74,7 @@ class DefinitionCrudController extends AbstractCrudController
                 ->onlyWhenCreating(),
             BooleanField::new('enabled')
                 ->setHelp('lopb.definition.field.enabled.help')
-                ->setLabel('lopb.definition.field.enabled.help')
+                ->setLabel('lopb.definition.field.enabled.help'),
         ];
     }
 

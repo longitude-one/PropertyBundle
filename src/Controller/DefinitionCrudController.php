@@ -11,6 +11,8 @@
 
 namespace LongitudeOne\PropertyBundle\Controller;
 
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -34,6 +36,18 @@ class DefinitionCrudController extends AbstractCrudController
         return Definition::class;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            ->update(Crud::PAGE_INDEX, Action::DELETE,
+                fn (Action $action) => $action->displayIf(
+                    fn (Definition $entity) => $entity->getProperties()->count() > 0
+                )
+            )
+            ;
+    }
+
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -50,6 +64,8 @@ class DefinitionCrudController extends AbstractCrudController
             ->setHelp('index', $this->trans('lopb.definition.index.help'))
             ->setHelp('edit', $this->trans('lopb.definition.edit.help'))
             ->setHelp('new', $this->trans('lopb.definition.new.help'))
+
+            ->showEntityActionsInlined()
 
 //            ->setFormOptions([
 //                'validation_groups' => ['Default']

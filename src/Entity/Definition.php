@@ -46,7 +46,7 @@ class Definition implements DefinitionInterface
     /**
      * @var ArrayCollection<int, PropertyInterface>
      */
-    #[ORM\OneToMany(mappedBy: 'definition', targetEntity: AbstractProperty::class, orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'definition', targetEntity: AbstractProperty::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     private Collection $properties;
 
     public function __construct()
@@ -140,5 +140,10 @@ class Definition implements DefinitionInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    public function isUsed(): bool
+    {
+        return count($this->getProperties()) > 0;
     }
 }

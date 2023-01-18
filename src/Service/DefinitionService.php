@@ -11,7 +11,6 @@
 
 namespace LongitudeOne\PropertyBundle\Service;
 
-use JetBrains\PhpStorm\ArrayShape;
 use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

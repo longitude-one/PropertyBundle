@@ -14,3 +14,10 @@ lopb.definition.edit.help: 'Properties definition management'
 lopb.definitions.label: 'Definitions'
 lopb.entities.actions: 'Actions'
 lopb.entities.show: 'Show'
+definition:
+    type:
+        boolean: 'Boolean value'
+        integer: 'Integer value'
+        float: 'Float value'
+        text: 'Text value'
+        mixed: 'Integer, float, boolean and text values'

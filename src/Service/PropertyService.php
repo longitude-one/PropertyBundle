@@ -44,7 +44,7 @@ class PropertyService
     /**
      * @return array<string, string>
      */
-    public function getAssociativeArray(): array
+    public function getChoices(): array
     {
         $associativeArray = [];
 

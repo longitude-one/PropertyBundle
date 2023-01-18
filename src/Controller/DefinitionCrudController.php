@@ -20,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use LongitudeOne\PropertyBundle\Entity\Definition;
+use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -28,6 +29,7 @@ class DefinitionCrudController extends AbstractCrudController
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly PropertyService $propertyService,
+        private readonly DefinitionService $definitionService,
     ) {
     }
 
@@ -45,7 +47,7 @@ class DefinitionCrudController extends AbstractCrudController
                     fn (Definition $entity) => $entity->getProperties()->count() > 0
                 )
             )
-            ;
+        ;
     }
 
     public function configureCrud(Crud $crud): Crud
@@ -78,19 +80,25 @@ class DefinitionCrudController extends AbstractCrudController
         return [
             IdField::new('id')->hideOnForm()
                 ->setHelp('lopb.definition.field.id.help')
-                ->setLabel('lopb.definition.field.id.help'),
+                ->setLabel('lopb.definition.field.id.label')
+                ->onlyOnDetail(),
             TextField::new('name')
                 ->setMaxLength(31)
                 ->setHelp('lopb.definition.field.name.help')
-                ->setLabel('lopb.definition.field.name.help'),
+                ->setLabel('lopb.definition.field.name.label'),
+            ChoiceField::new('type')
+                ->setHelp('lopb.definition.field.entityClassname.help')
+                ->setLabel('lopb.definition.field.entityClassname.label')
+                ->setChoices($this->definitionService->getChoices())
+                ->hideWhenUpdating(),
             ChoiceField::new('entityClassname')
                 ->setHelp('lopb.definition.field.entityClassname.help')
-                ->setLabel('lopb.definition.field.entityClassname.help')
-                ->setChoices($this->propertyService->getAssociativeArray())
-                ->onlyWhenCreating(),
+                ->setLabel('lopb.definition.field.entityClassname.label')
+                ->setChoices($this->propertyService->getChoices())
+                ->hideWhenUpdating(),
             BooleanField::new('enabled')
                 ->setHelp('lopb.definition.field.enabled.help')
-                ->setLabel('lopb.definition.field.enabled.help'),
+                ->setLabel('lopb.definition.field.enabled.label'),
         ];
     }
 

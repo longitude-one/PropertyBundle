@@ -21,6 +21,7 @@ use LongitudeOne\PropertyBundle\Repository\IntegerPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\StringPropertyRepository;
+use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyContextService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -29,6 +30,7 @@ use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigura
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container) {
+    // Repositories
     $repositories = [
         BoolPropertyRepository::class,
         DefinitionRepository::class,
@@ -48,6 +50,13 @@ return static function (ContainerConfigurator $container) {
     }
 
     // Public services
+    $container->services()
+        ->set(DefinitionService::class)
+        ->autowire()
+        ->public()
+        ->arg(0, service('translator'))
+    ;
+
     $container->services()
         ->set(PropertyService::class)
         ->autowire()

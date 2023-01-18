@@ -38,7 +38,6 @@ class Definition implements DefinitionInterface
     private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 31)]
-    #[Assert\Email]
     #[LongitudeOneAssert\Keyword]
     #[Assert\Length(max: 31)]
     private string $name;
@@ -48,6 +47,10 @@ class Definition implements DefinitionInterface
      */
     #[ORM\OneToMany(mappedBy: 'definition', targetEntity: AbstractProperty::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     private Collection $properties;
+
+    #[ORM\Column(type: Types::SMALLINT, options: ['default' => self::MIXED])]
+    #[Assert\Range(min: self::MIXED, max: self::TEXT)]
+    private int $type = self::MIXED;
 
     public function __construct()
     {
@@ -92,9 +95,19 @@ class Definition implements DefinitionInterface
         return $this->properties;
     }
 
+    public function getType(): int
+    {
+        return $this->type;
+    }
+
     public function isEnabled(): bool
     {
         return $this->enabled;
+    }
+
+    public function isUsed(): bool
+    {
+        return $this->getProperties()->count() > 0;
     }
 
     public function removeProperty(PropertyInterface $property): DefinitionInterface
@@ -142,8 +155,14 @@ class Definition implements DefinitionInterface
         return $this;
     }
 
-    public function isUsed(): bool
+    public function setType(int $type): self
     {
-        return count($this->getProperties()) > 0;
+        if (!in_array($type, [self::MIXED, self::BOOLEAN, self::INTEGER, self::FLOAT, self::TEXT])) {
+            throw new LongitudeOne\PropertyBundle\Exception\InvalidTypeException($type);
+        }
+
+        $this->type = $type;
+
+        return $this;
     }
 }

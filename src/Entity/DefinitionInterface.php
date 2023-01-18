@@ -15,6 +15,12 @@ use Doctrine\Common\Collections\Collection;
 
 interface DefinitionInterface
 {
+    public const BOOLEAN = 4;
+    public const FLOAT = 2;
+    public const INTEGER = 1;
+    public const MIXED = 0;
+    public const TEXT = 3;
+
     public function addProperty(PropertyInterface $property): self;
 
     public function getEntityClassname(): string;

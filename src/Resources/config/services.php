@@ -12,8 +12,11 @@
 namespace LongitudeOne\PropertyBundle\DependencyInjection\Loader\Configurator;
 
 use Doctrine\Persistence\ManagerRegistry;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterCrudActionEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use LongitudeOne\PropertyBundle\Controller\DefinitionCrudController;
+use LongitudeOne\PropertyBundle\EventListener\CrudActionListener;
 use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
@@ -27,6 +30,7 @@ use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 // use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
+use Symfony\Component\DependencyInjection\Reference;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $container) {
@@ -63,6 +67,16 @@ return static function (ContainerConfigurator $container) {
         ->public()
         ->arg(0, service('doctrine.orm.entity_manager'))
         ->arg(1, []) // param('extendable_entities') is not available yet. This argument will be replaced by extension.
+    ;
+
+    // Subscribers
+    $container->services()
+        ->set(CrudActionListener::class)
+        ->arg(0, service(PropertyService::class))
+        ->arg(1, service(DefinitionService::class))
+        ->arg(2, new Reference('logger'))
+        ->tag('kernel.event_listener', ['event' => AfterCrudActionEvent::class, 'method' => 'afterCrudActionEvent'])
+        ->tag('kernel.event_listener', ['event' => BeforeCrudActionEvent::class, 'method' => 'beforeCrudActionEvent'])
     ;
 
     // CRUD Controllers

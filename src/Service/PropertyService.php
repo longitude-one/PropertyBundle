@@ -74,4 +74,15 @@ class PropertyService
 
         return $this->entities[$keyword];
     }
+
+    public function has(string $fqcn)
+    {
+        foreach ($this->entities as $entity) {
+            if ($entity['class'] === $fqcn) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

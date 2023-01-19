@@ -22,6 +22,7 @@ use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 // TODO Index lopb_index_definition_name shall be uniq!
 #[ORM\Entity(repositoryClass: DefinitionRepository::class)]
+#[ORM\Table(name: 'lopb_definitions')]
 #[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_definition_name')]
 #[ORM\Index(columns: ['entity_classname'], name: 'lopb_index_property_entity')]
 class Definition implements DefinitionInterface

@@ -14,6 +14,7 @@ namespace LongitudeOne\PropertyBundle\EventListener;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
+use JetBrains\PhpStorm\ArrayShape;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Psr\Log\LoggerInterface;
@@ -28,6 +29,7 @@ class CrudActionListener implements EventSubscriberInterface
     ) {
     }
 
+    #[ArrayShape([AfterCrudActionEvent::class => "string", BeforeCrudActionEvent::class => "string"])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -39,7 +41,7 @@ class CrudActionListener implements EventSubscriberInterface
     public function afterCrudActionEvent(AfterCrudActionEvent $event): void
     {
         // Is extendable entity declared?
-        if (!$this->propertyService->has($event->getAdminContext()->getEntity()->getFqcn())) {
+        if (null === $event->getAdminContext() || !$this->propertyService->has($event->getAdminContext()->getEntity()->getFqcn())) {
             return;
         }
 
@@ -55,16 +57,27 @@ class CrudActionListener implements EventSubscriberInterface
 
         // Let's call the method
         match ($event->getResponseParameters()->get('pageName')) {
-            Crud::PAGE_INDEX => $this->onIndexPage($event),
             Crud::PAGE_DETAIL => $this->onDetailPage($event),
             Crud::PAGE_EDIT => $this->onEditPage($event),
             Crud::PAGE_NEW => $this->onNewPage($event),
+            // Crud::PAGE_INDEX => onIndexPage($event),
+            default => $this->onIndexPage($event),
         };
     }
 
-    public function beforeCrudActionEvent(BeforeCrudActionEvent $event)
+    public function beforeCrudActionEvent(BeforeCrudActionEvent $event): void
     {
         dump($event);
+    }
+
+    private function onDetailPage(AfterCrudActionEvent $event) : void
+    {
+        dump($event, 'detail');
+    }
+
+    private function onEditPage(AfterCrudActionEvent $event): void
+    {
+        dump($event, 'edit');
     }
 
     private function onIndexPage(AfterCrudActionEvent $event): void
@@ -74,17 +87,7 @@ class CrudActionListener implements EventSubscriberInterface
         dump($event, 'index');
     }
 
-    private function onDetailPage(AfterCrudActionEvent $event)
-    {
-        dump($event, 'detail');
-    }
-
-    private function onEditPage(AfterCrudActionEvent $event)
-    {
-        dump($event, 'edit');
-    }
-
-    private function onNewPage(AfterCrudActionEvent $event)
+    private function onNewPage(AfterCrudActionEvent $event): void
     {
         dump($event, 'new');
     }

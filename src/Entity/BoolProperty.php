@@ -16,6 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 
 #[ORM\Entity(repositoryClass: BoolPropertyRepository::class)]
+// FIXME rename to BooleanProperty
 class BoolProperty extends AbstractProperty implements PropertyInterface
 {
     #[ORM\Column(name: 'bool_value', type: Types::BOOLEAN)]

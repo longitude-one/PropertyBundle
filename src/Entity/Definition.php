@@ -49,9 +49,9 @@ class Definition implements DefinitionInterface
     #[ORM\OneToMany(mappedBy: 'definition', targetEntity: AbstractProperty::class, fetch: 'EXTRA_LAZY', orphanRemoval: true)]
     private Collection $properties;
 
-    #[ORM\Column(type: Types::SMALLINT, options: ['default' => self::MIXED])]
-    #[Assert\Range(min: self::MIXED, max: self::TEXT)]
-    private int $type = self::MIXED;
+    #[ORM\Column(type: Types::SMALLINT, options: ['default' => self::TYPE_MIXED])]
+    #[Assert\Range(min: self::TYPE_MIXED, max: self::TYPE_TEXT)]
+    private int $type = self::TYPE_MIXED;
 
     public function __construct()
     {
@@ -158,7 +158,7 @@ class Definition implements DefinitionInterface
 
     public function setType(int $type): self
     {
-        if (!in_array($type, [self::MIXED, self::BOOLEAN, self::INTEGER, self::FLOAT, self::TEXT])) {
+        if (!in_array($type, [self::TYPE_MIXED, self::TYPE_BOOLEAN, self::TYPE_INTEGER, self::TYPE_FLOAT, self::TYPE_TEXT])) {
             throw new LongitudeOne\PropertyBundle\Exception\InvalidTypeException($type);
         }
 

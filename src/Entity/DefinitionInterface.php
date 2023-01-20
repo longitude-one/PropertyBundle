@@ -15,11 +15,11 @@ use Doctrine\Common\Collections\Collection;
 
 interface DefinitionInterface
 {
-    public const BOOLEAN = 4;
-    public const FLOAT = 2;
-    public const INTEGER = 1;
-    public const MIXED = 0;
-    public const TEXT = 3;
+    public const TYPE_BOOLEAN = 4;
+    public const TYPE_FLOAT = 2;
+    public const TYPE_INTEGER = 1;
+    public const TYPE_MIXED = 0;
+    public const TYPE_TEXT = 3;
 
     public function addProperty(PropertyInterface $property): self;
 

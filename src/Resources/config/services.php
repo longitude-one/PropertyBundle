@@ -30,8 +30,9 @@ use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
 // use function Symfony\Component\DependencyInjection\Loader\Configurator\param;
-use Symfony\Component\DependencyInjection\Reference;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
+
+use Symfony\Component\DependencyInjection\Reference;
 
 return static function (ContainerConfigurator $container) {
     // Repositories

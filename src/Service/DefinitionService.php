@@ -26,11 +26,11 @@ class DefinitionService
     public function getChoices(): array
     {
         return [
-            $this->translator->trans('definition.type.boolean', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::BOOLEAN,
-            $this->translator->trans('definition.type.integer', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::INTEGER,
-            $this->translator->trans('definition.type.float', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::FLOAT,
-            $this->translator->trans('definition.type.text', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TEXT,
-            $this->translator->trans('definition.type.mixed', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::MIXED,
+            $this->translator->trans('definition.type.boolean', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TYPE_BOOLEAN,
+            $this->translator->trans('definition.type.integer', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TYPE_INTEGER,
+            $this->translator->trans('definition.type.float', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TYPE_FLOAT,
+            $this->translator->trans('definition.type.text', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TYPE_TEXT,
+            $this->translator->trans('definition.type.mixed', [], 'LongitudeOnePropertyBundle') => DefinitionInterface::TYPE_MIXED,
         ];
     }
 }

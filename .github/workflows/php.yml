@@ -36,7 +36,7 @@ jobs:
 
       - name: Cache Composer packages with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         id: composer-cache
-        uses: actions/cache@v3.2
+        uses: actions/cache@v3
         with:
           path: vendor
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}

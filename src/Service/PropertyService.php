@@ -11,7 +11,12 @@
 
 namespace LongitudeOne\PropertyBundle\Service;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
+use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
+use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
@@ -38,7 +43,7 @@ class PropertyService
             $this->entities[$keyword] = $entity;
         }
 
-        $this->propertyRepository = $this->entityManager->getRepository(NonTypedProperty::class);
+        $this->propertyRepository = $this->entityManager->getRepository(AbstractProperty::class);
     }
 
     /**
@@ -84,5 +89,16 @@ class PropertyService
         }
 
         return false;
+    }
+
+    public function getProperties(LinkedInterface $instance): Collection
+    {
+        $collection = new ArrayCollection();
+        $properties = $this->propertyRepository->findByEntity($instance);
+        foreach ($properties as $property) {
+            $collection->add($property);
+        }
+
+        return $collection;
     }
 }

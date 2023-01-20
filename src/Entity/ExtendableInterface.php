@@ -11,15 +11,16 @@
 
 namespace LongitudeOne\PropertyBundle\Entity;
 
+use Doctrine\Common\Collections\Collection;
+
 interface ExtendableInterface
 {
     /**
-     * @return PropertyInterface[]
+     * @return Collection<int, PropertyInterface>
      */
-    public function getProperties(): iterable;
+    public function getProperties(): Collection;
 
-    /**
-     * @param PropertyInterface[] $properties
-     */
-    public function setProperties(iterable $properties): self;
+    public function addProperty(PropertyInterface $property): self;
+
+    public function removeProperty(PropertyInterface $property): self;
 }

@@ -11,28 +11,53 @@
 
 namespace LongitudeOne\PropertyBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+
 trait ExtendableTrait
 {
     /**
-     * @var PropertyInterface[]
+     * @var Collection<int, PropertyInterface>
      */
-    private iterable $properties;
+    private Collection $properties;
 
     /**
-     * @return PropertyInterface[]
+     * @return Collection<int, PropertyInterface>
      */
-    public function getProperties(): iterable
+    public function getProperties(): Collection
     {
         return $this->properties;
     }
 
+    public function addProperty(PropertyInterface $property): self
+    {
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->setEntity($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProperty(PropertyInterface $property): self
+    {
+        $this->properties->removeElement($property);
+
+        return $this;
+    }
+
     /**
-     * @param PropertyInterface[] $properties
+     * @param Collection<int, PropertyInterface> $properties
      */
-    public function setProperties(iterable $properties): self
+    public function setProperties(Collection $properties): self
     {
         $this->properties = $properties;
 
         return $this;
+    }
+
+    protected function initializeProperties(): void
+    {
+        $this->properties = new ArrayCollection();
     }
 }

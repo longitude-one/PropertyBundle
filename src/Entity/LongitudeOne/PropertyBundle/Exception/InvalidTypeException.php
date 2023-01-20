@@ -9,6 +9,7 @@
  * Copyright 2021 - 2023
  */
 
+// TODO move to the good directory!
 namespace LongitudeOne\PropertyBundle\Entity\LongitudeOne\PropertyBundle\Exception;
 
 class InvalidTypeException extends \InvalidArgumentException implements \Throwable

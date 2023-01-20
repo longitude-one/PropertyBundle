@@ -12,9 +12,11 @@
 namespace LongitudeOne\PropertyBundle\EventListener;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use JetBrains\PhpStorm\ArrayShape;
+use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Psr\Log\LoggerInterface;
@@ -50,7 +52,7 @@ class CrudActionListener implements EventSubscriberInterface
         }
 
         if (!$event->getResponseParameters()->has('pageName')) {
-            $this->logger->debug('pageName is not present in response parameters of this instance of AfterCrudActionEvent');
+            $this->logger->warning('pageName is not present in response parameters of this instance of AfterCrudActionEvent');
 
             return;
         }
@@ -67,28 +69,33 @@ class CrudActionListener implements EventSubscriberInterface
 
     public function beforeCrudActionEvent(BeforeCrudActionEvent $event): void
     {
-        dump($event);
     }
 
     private function onDetailPage(AfterCrudActionEvent $event) : void
     {
-        dump($event, 'detail');
+        $this->logger->debug('EasyAdmin Crud DETAIL Page intercepted for properties');
+        // Get all properties for this entity
+        $instance =  $event->getAdminContext()->getEntity()->getInstance();
+        $instance->setProperties($this->propertyService->getProperties($instance));
+
+        foreach ($instance->getProperties() as $property) {
+            $this->logger->debug('Property found: ' . $property->getDefinition()->getName().': '.$property->getValue());
+        }
     }
 
     private function onEditPage(AfterCrudActionEvent $event): void
     {
-        dump($event, 'edit');
+        $this->logger->debug('EasyAdmin Crud Edit Page intercepted for properties');
     }
 
     private function onIndexPage(AfterCrudActionEvent $event): void
     {
         $this->logger->debug('EasyAdmin Crud Index Page intercepted for properties');
-
-        dump($event, 'index');
     }
 
     private function onNewPage(AfterCrudActionEvent $event): void
     {
-        dump($event, 'new');
+        $this->logger->debug('EasyAdmin Crud NEW Page intercepted for properties');
+
     }
 }

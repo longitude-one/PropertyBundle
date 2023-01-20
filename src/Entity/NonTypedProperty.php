@@ -18,13 +18,14 @@ use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 #[ORM\Entity(repositoryClass: NonTypedPropertyRepository::class)]
 class NonTypedProperty extends AbstractProperty implements PropertyInterface
 {
-    #[ORM\Column(name: 'non_typed_value', type: Types::TEXT)]
-    private string $value;
+    const SERIALIZED_NULL = 'N;';
+
+    #[ORM\Column(name: 'non_typed_value', type: Types::TEXT, nullable: false, options: ['default' => self::SERIALIZED_NULL])]
+    private string $value = self::SERIALIZED_NULL;
 
     public function __construct(DefinitionInterface $definition)
     {
         parent::__construct($definition);
-        $this->value = serialize(null);
     }
 
     public function getValue(): bool|float|int|null|string

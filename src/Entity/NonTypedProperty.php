@@ -18,7 +18,7 @@ use LongitudeOne\PropertyBundle\Repository\NonTypedPropertyRepository;
 #[ORM\Entity(repositoryClass: NonTypedPropertyRepository::class)]
 class NonTypedProperty extends AbstractProperty implements PropertyInterface
 {
-    const SERIALIZED_NULL = 'N;';
+    public const SERIALIZED_NULL = 'N;';
 
     #[ORM\Column(name: 'non_typed_value', type: Types::TEXT, nullable: false, options: ['default' => self::SERIALIZED_NULL])]
     private string $value = self::SERIALIZED_NULL;

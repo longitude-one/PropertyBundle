@@ -21,14 +21,6 @@ trait ExtendableTrait
      */
     private Collection $properties;
 
-    /**
-     * @return Collection<int, PropertyInterface>
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
     public function addProperty(PropertyInterface $property): self
     {
         if (!$this->properties->contains($property)) {
@@ -37,6 +29,14 @@ trait ExtendableTrait
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, PropertyInterface>
+     */
+    public function getProperties(): Collection
+    {
+        return $this->properties;
     }
 
     public function removeProperty(PropertyInterface $property): self

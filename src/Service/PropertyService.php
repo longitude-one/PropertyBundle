@@ -15,9 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
-use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
-use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
+use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
 
@@ -80,17 +79,9 @@ class PropertyService
         return $this->entities[$keyword];
     }
 
-    public function has(string $fqcn): bool
-    {
-        foreach ($this->entities as $entity) {
-            if ($entity['class'] === $fqcn) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
+    /**
+     * @return Collection<int, PropertyInterface>
+     */
     public function getProperties(LinkedInterface $instance): Collection
     {
         $collection = new ArrayCollection();
@@ -100,5 +91,16 @@ class PropertyService
         }
 
         return $collection;
+    }
+
+    public function has(string $fqcn): bool
+    {
+        foreach ($this->entities as $entity) {
+            if ($entity['class'] === $fqcn) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

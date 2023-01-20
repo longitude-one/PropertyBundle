@@ -11,10 +11,8 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\NoReturn;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\ExtendableTrait;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;

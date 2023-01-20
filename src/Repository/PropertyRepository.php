@@ -12,10 +12,8 @@
 namespace LongitudeOne\PropertyBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
-use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 

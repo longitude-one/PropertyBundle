@@ -26,7 +26,7 @@ class KeywordValidatorTest extends ConstraintValidatorTestCase
 {
     public function testArrayThrowException(): void
     {
-        self::expectExceptionMessage('Expected argument of type "string", "array" given');
+        self::expectExceptionMessage('Expected argument of type "string|Stringable", "array" given');
         self::expectException(UnexpectedValueException::class);
 
         $this->validator->validate([], new Keyword());
@@ -73,7 +73,7 @@ class KeywordValidatorTest extends ConstraintValidatorTestCase
 
     public function testObjectThrowException(): void
     {
-        self::expectExceptionMessage('Expected argument of type "string", "stdClass" given');
+        self::expectExceptionMessage('Expected argument of type "string|Stringable", "stdClass" given');
         self::expectException(UnexpectedValueException::class);
 
         $this->validator->validate(new \stdClass(), new Keyword());

@@ -31,9 +31,9 @@ class KeywordValidator extends ConstraintValidator
         }
 
         // the argument must be a string or an object implementing __toString()
-        if (!is_string($value)) {
+        if (!is_string($value) && !$value instanceof \Stringable) {
             // throw this exception if your validator cannot handle the passed type so that it can be marked as invalid
-            throw new UnexpectedValueException($value, 'string');
+            throw new UnexpectedValueException($value, 'string|Stringable');
         }
 
         if (!preg_match('/[a-z]+([a-z]|-|_)*[a-z]+/i', $value)) {

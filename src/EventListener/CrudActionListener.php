@@ -12,11 +12,9 @@
 namespace LongitudeOne\PropertyBundle\EventListener;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use JetBrains\PhpStorm\ArrayShape;
-use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Psr\Log\LoggerInterface;
@@ -31,7 +29,7 @@ class CrudActionListener implements EventSubscriberInterface
     ) {
     }
 
-    #[ArrayShape([AfterCrudActionEvent::class => "string", BeforeCrudActionEvent::class => "string"])]
+    #[ArrayShape([AfterCrudActionEvent::class => 'string', BeforeCrudActionEvent::class => 'string'])]
     public static function getSubscribedEvents(): array
     {
         return [
@@ -71,15 +69,15 @@ class CrudActionListener implements EventSubscriberInterface
     {
     }
 
-    private function onDetailPage(AfterCrudActionEvent $event) : void
+    private function onDetailPage(AfterCrudActionEvent $event): void
     {
         $this->logger->debug('EasyAdmin Crud DETAIL Page intercepted for properties');
-        // Get all properties for this entity
-        $instance =  $event->getAdminContext()->getEntity()->getInstance();
+        // Get all properties for this entity. AdminContext is not null because of the first test.
+        $instance = $event->getAdminContext()->getEntity()->getInstance();
         $instance->setProperties($this->propertyService->getProperties($instance));
 
         foreach ($instance->getProperties() as $property) {
-            $this->logger->debug('Property found: ' . $property->getDefinition()->getName().': '.$property->getValue());
+            $this->logger->debug('Property found: '.$property->getDefinition()->getName().': '.$property->getValue());
         }
     }
 
@@ -96,6 +94,5 @@ class CrudActionListener implements EventSubscriberInterface
     private function onNewPage(AfterCrudActionEvent $event): void
     {
         $this->logger->debug('EasyAdmin Crud NEW Page intercepted for properties');
-
     }
 }

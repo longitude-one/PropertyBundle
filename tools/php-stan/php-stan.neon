@@ -44,6 +44,11 @@ parameters:
 			path: ../../src/Repository/PropertyRepository.php
 
 		-
-			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\Service\\\\PropertyService\\:\\:\\$propertyRepository is never read, only written\\.$#"
+			message: "#^Cannot call method getEntity\\(\\) on EasyCorp\\\\Bundle\\\\EasyAdminBundle\\\\Context\\\\AdminContext\\|null\\.$#"
 			count: 1
-			path: ../../src/Service/PropertyService.php
+			path: ../../src/EventListener/CrudActionListener.php
+
+		-
+			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\EventListener\\\\CrudActionListener\\:\\:\\$definitionService is never read, only written\\.$#"
+			count: 1
+			path: ../../src/EventListener/CrudActionListener.php

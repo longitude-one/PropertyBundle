@@ -31,7 +31,7 @@ class CharacterCrudController extends AbstractCrudController
         return $actions
             ->add(Crud::PAGE_INDEX, Action::DETAIL)
             ->add(Crud::PAGE_EDIT, Action::DETAIL)
-            ;
+        ;
     }
 
     public function configureFields(string $pageName): iterable

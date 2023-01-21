@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use LongitudeOne\PropertyBundle\Exception\InvalidTypeException;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Validator as LongitudeOneAssert;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -159,7 +160,7 @@ class Definition implements DefinitionInterface
     public function setType(int $type): self
     {
         if (!in_array($type, [self::TYPE_MIXED, self::TYPE_BOOLEAN, self::TYPE_INTEGER, self::TYPE_FLOAT, self::TYPE_TEXT])) {
-            throw new LongitudeOne\PropertyBundle\Exception\InvalidTypeException($type);
+            throw new InvalidTypeException($type);
         }
 
         $this->type = $type;

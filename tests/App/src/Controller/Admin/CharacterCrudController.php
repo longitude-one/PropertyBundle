@@ -43,4 +43,15 @@ class CharacterCrudController extends AbstractCrudController
                 ->setMaxLength(31),
         ];
     }
+
+public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
+            ->setEntityLabelInSingular('Character')
+            ->setEntityLabelInPlural('Characters')
+            ->setSearchFields(['id', 'name'])
+            ->setPaginatorPageSize(40)
+        ;
+    }
 }

@@ -71,14 +71,15 @@ class CrudActionListener implements EventSubscriberInterface
 
     private function onDetailPage(AfterCrudActionEvent $event): void
     {
-        $this->logger->debug('EasyAdmin Crud DETAIL Page intercepted for properties');
         // Get all properties for this entity. AdminContext is not null because of the first test.
         $instance = $event->getAdminContext()->getEntity()->getInstance();
         $instance->setProperties($this->propertyService->getProperties($instance));
 
         foreach ($instance->getProperties() as $property) {
-            $this->logger->debug('Property found: '.$property->getDefinition()->getName().': '.$property->getValue());
+            $this->logger->debug('PropertyBundle: Property found: '.$property->getDefinition()->getName().': '.$property->getValue());
         }
+
+        $event->getResponseParameters()->set('lopb.properties', $instance->getProperties());
     }
 
     private function onEditPage(AfterCrudActionEvent $event): void

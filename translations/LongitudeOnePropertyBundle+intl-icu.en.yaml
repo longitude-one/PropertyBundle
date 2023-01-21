@@ -21,3 +21,6 @@ definition:
         float: 'Float value'
         text: 'Text value'
         mixed: 'Integer, float, boolean and text values'
+lopb:
+    properties:
+        title: 'Properties'

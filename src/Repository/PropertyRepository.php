@@ -37,7 +37,7 @@ class PropertyRepository extends ServiceEntityRepository implements PropertyRepo
     {
         /** @var array<int,PropertyInterface> $properties */
         $properties = $this->createQueryBuilder('p')
-            ->join('p.definition', 'd')
+            ->leftJoin('p.definition', 'd')
             ->where('p.entityId = :entityId')
             ->andWhere('d.entityClassname = :className')
             ->setParameter('entityId', $linkedEntity->getLinkedId())

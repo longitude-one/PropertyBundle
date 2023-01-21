@@ -14,7 +14,6 @@ namespace LongitudeOne\PropertyBundle\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -111,6 +110,7 @@ class PropertyService
      */
     public function getPropertiesDto(ExtendableInterface $extendableEntity): array
     {
+        // FIXME this code doesn't catch the properties without connection (left outer join)
         $propertiesDto = [];
         foreach ($extendableEntity->getProperties() as $property) {
             $propertiesDto[] = $this->getPropertyDto($property);

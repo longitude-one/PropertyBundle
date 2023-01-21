@@ -37,6 +37,7 @@ class CharacterCrudController extends AbstractCrudController
 public function configureCrud(Crud $crud): Crud
 {
     return $crud
+        // Try to override the default template in the bundle event listener
         ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
         ->setEntityLabelInSingular('Character')
         ->setEntityLabelInPlural('Characters')

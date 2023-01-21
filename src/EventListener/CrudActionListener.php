@@ -79,7 +79,8 @@ class CrudActionListener implements EventSubscriberInterface
             $this->logger->debug('PropertyBundle: Property found: '.$property->getDefinition()->getName().': '.$property->getValue());
         }
 
-        $event->getResponseParameters()->set('lopb.properties', $instance->getProperties());
+        $propertiesDto = $this->propertyService->getPropertiesDto($instance);
+        $event->getResponseParameters()->set('lopb.properties', $propertiesDto);
     }
 
     private function onEditPage(AfterCrudActionEvent $event): void

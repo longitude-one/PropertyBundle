@@ -14,9 +14,22 @@ namespace LongitudeOne\PropertyBundle\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use LongitudeOne\PropertyBundle\Dto\PropertyDto;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
+use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
+use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
+use LongitudeOne\PropertyBundle\Entity\FloatProperty;
+use LongitudeOne\PropertyBundle\Entity\IntegerProperty;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
+use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
+use LongitudeOne\PropertyBundle\Entity\StringProperty;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
 
@@ -93,6 +106,19 @@ class PropertyService
         return $collection;
     }
 
+    /**
+     * @return PropertyDto[]>
+     */
+    public function getPropertiesDto(ExtendableInterface $extendableEntity): array
+    {
+        $propertiesDto = [];
+        foreach ($extendableEntity->getProperties() as $property) {
+            $propertiesDto[] = $this->getPropertyDto($property);
+        }
+
+        return $propertiesDto;
+    }
+
     public function has(string $fqcn): bool
     {
         foreach ($this->entities as $entity) {
@@ -102,5 +128,36 @@ class PropertyService
         }
 
         return false;
+    }
+
+    private function getPropertyDto(PropertyInterface $property): PropertyDto
+    {
+//        $fieldClassname = match($property->getDefinition()->getType()) {
+//            DefinitionInterface::TYPE_INTEGER  => IntegerField::class,
+//            DefinitionInterface::TYPE_BOOLEAN => BooleanField::class,
+//            DefinitionInterface::TYPE_FLOAT => NumberField::class,
+//            default => TextField::class,
+//        };
+
+        $fieldDto = new FieldDto();
+        $fieldDto->setLabel($property->getDefinition()->getName());
+        $fieldDto->setValue($property->getValue());
+        $fieldDto->setFieldFqcn(match ($property->getDefinition()->getType()) {
+            DefinitionInterface::TYPE_TEXT => StringProperty::class,
+            DefinitionInterface::TYPE_INTEGER => IntegerProperty::class,
+            DefinitionInterface::TYPE_BOOLEAN => BoolProperty::class,
+            DefinitionInterface::TYPE_FLOAT => FloatProperty::class,
+            default => NonTypedProperty::class,
+        });
+        $fieldDto->setProperty('value');
+
+        $propertyDto = new PropertyDto();
+        $propertyDto->setFieldDto($fieldDto);
+        $propertyDto->setLabel($property->getDefinition()->getName());
+        $propertyDto->setType($property->getDefinition()->getType());
+        $propertyDto->setValue($property->getValue());
+        $propertyDto->setName($property->getDefinition()->getName());
+
+        return $propertyDto;
     }
 }

@@ -32,6 +32,8 @@ interface DefinitionInterface
      */
     public function getProperties(): Collection;
 
+    public function getType(): int;
+
     public function isEnabled(): bool;
 
     public function removeProperty(PropertyInterface $property): self;

@@ -34,6 +34,17 @@ class CharacterCrudController extends AbstractCrudController
         ;
     }
 
+public function configureCrud(Crud $crud): Crud
+{
+    return $crud
+        ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
+        ->setEntityLabelInSingular('Character')
+        ->setEntityLabelInPlural('Characters')
+        ->setSearchFields(['id', 'name'])
+        ->setPaginatorPageSize(40)
+    ;
+}
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -42,16 +53,5 @@ class CharacterCrudController extends AbstractCrudController
             TextField::new('name')
                 ->setMaxLength(31),
         ];
-    }
-
-public function configureCrud(Crud $crud): Crud
-    {
-        return $crud
-            ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
-            ->setEntityLabelInSingular('Character')
-            ->setEntityLabelInPlural('Characters')
-            ->setSearchFields(['id', 'name'])
-            ->setPaginatorPageSize(40)
-        ;
     }
 }

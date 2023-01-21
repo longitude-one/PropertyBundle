@@ -38,14 +38,13 @@
 
 {% endmacro %}
 
-{# TODO Replace property by fieldDto #}
-{% macro render_property(property) %}
-    <div class="data-row field-text">
+{% macro render_property(propertyDto) %}
+    <div class="data-row {{ propertyDto.fieldDto.cssClass }}">
         <dt>
-            {{ property.definition.name }}
+            {{ propertyDto.fieldDto.label }}
         </dt>
         <dd>
-            {{ property.definition.type == 4 ? property.value : (property.value ~ '-') }}
+            {{ propertyDto.fieldDto.formattedValue ?? propertyDto.fieldDto.value }}
         </dd>
     </div>
 {% endmacro %}

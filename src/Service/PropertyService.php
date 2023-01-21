@@ -14,7 +14,7 @@ namespace LongitudeOne\PropertyBundle\Service;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Field\FieldInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -132,27 +132,28 @@ class PropertyService
 
     private function getPropertyDto(PropertyInterface $property): PropertyDto
     {
-//        $fieldClassname = match($property->getDefinition()->getType()) {
-//            DefinitionInterface::TYPE_INTEGER  => IntegerField::class,
-//            DefinitionInterface::TYPE_BOOLEAN => BooleanField::class,
-//            DefinitionInterface::TYPE_FLOAT => NumberField::class,
-//            default => TextField::class,
-//        };
+        $fieldClassname = match ($property->getDefinition()->getType()) {
+            DefinitionInterface::TYPE_INTEGER => IntegerField::class,
+            DefinitionInterface::TYPE_BOOLEAN => BooleanField::class,
+            DefinitionInterface::TYPE_FLOAT => NumberField::class,
+            default => TextField::class,
+        };
 
-        $fieldDto = new FieldDto();
-        $fieldDto->setLabel($property->getDefinition()->getName());
-        $fieldDto->setValue($property->getValue());
-        $fieldDto->setFieldFqcn(match ($property->getDefinition()->getType()) {
+        /** @var TextField|IntegerField|BooleanField|NumberField $field */
+        $field = $fieldClassname::new($property->getDefinition()->getName());
+        $field->setProperty($property->getDefinition()->getName());
+        $field->setLabel($property->getDefinition()->getName());
+        $field->setValue($property->getValue());
+        $field->setFieldFqcn(match ($property->getDefinition()->getType()) {
             DefinitionInterface::TYPE_TEXT => StringProperty::class,
             DefinitionInterface::TYPE_INTEGER => IntegerProperty::class,
             DefinitionInterface::TYPE_BOOLEAN => BoolProperty::class,
             DefinitionInterface::TYPE_FLOAT => FloatProperty::class,
             default => NonTypedProperty::class,
         });
-        $fieldDto->setProperty('value');
 
         $propertyDto = new PropertyDto();
-        $propertyDto->setFieldDto($fieldDto);
+        $propertyDto->setFieldDto($field->getAsDto());
         $propertyDto->setLabel($property->getDefinition()->getName());
         $propertyDto->setType($property->getDefinition()->getType());
         $propertyDto->setValue($property->getValue());

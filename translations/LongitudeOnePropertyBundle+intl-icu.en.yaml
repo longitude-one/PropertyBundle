@@ -23,4 +23,4 @@ definition:
         mixed: 'Integer, float, boolean and text values'
 lopb:
     properties:
-        title: 'Properties'
+        title: 'Custom properties'

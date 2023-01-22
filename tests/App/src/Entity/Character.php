@@ -29,7 +29,7 @@ class Character implements ExtendableInterface, LinkedInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER, nullable: false)]
-    private int $id;
+    private ?int $id = null;
 
     #[ORM\Column(type: Types::STRING, length: 31, nullable: false)]
     private string $name = '';

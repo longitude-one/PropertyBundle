@@ -34,17 +34,17 @@ class CharacterCrudController extends AbstractCrudController
         ;
     }
 
-public function configureCrud(Crud $crud): Crud
-{
-    return $crud
-        // Try to override the default template in the bundle event listener
-        ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
-        ->setEntityLabelInSingular('Character')
-        ->setEntityLabelInPlural('Characters')
-        ->setSearchFields(['id', 'name'])
-        ->setPaginatorPageSize(40)
-    ;
-}
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            // TODO Try to override the default template in the bundle event listener
+            ->overrideTemplate('crud/detail', '@LongitudeOneProperty/admin/crud/detail.html.twig')
+            ->setEntityLabelInSingular('Character')
+            ->setEntityLabelInPlural('Characters')
+            ->setSearchFields(['id', 'name'])
+            ->setPaginatorPageSize(40)
+        ;
+    }
 
     public function configureFields(string $pageName): iterable
     {

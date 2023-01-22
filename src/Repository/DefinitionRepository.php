@@ -30,6 +30,19 @@ class DefinitionRepository extends ServiceEntityRepository
         parent::__construct($registry, Definition::class);
     }
 
+    /**
+     * @return array<int,Definition>
+     */
+    public function findByClassname(string $className): array
+    {
+        return $this->createQueryBuilder('d')
+           ->andWhere('d.entityClassname = :className')
+           ->setParameter('className', $className)
+           ->orderBy('d.name', 'ASC')
+           ->getQuery()
+           ->getResult();
+    }
+
     public function remove(Definition $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -47,29 +60,4 @@ class DefinitionRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-//    /**
-//     * @return Definition[] Returns an array of Definition objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('d.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Definition
-//    {
-//        return $this->createQueryBuilder('d')
-//            ->andWhere('d.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
 }

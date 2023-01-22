@@ -21,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use LongitudeOne\PropertyBundle\Dto\PropertyDto;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
 use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\FloatProperty;
@@ -30,10 +31,12 @@ use LongitudeOne\PropertyBundle\Entity\NonTypedProperty;
 use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 use LongitudeOne\PropertyBundle\Entity\StringProperty;
 use LongitudeOne\PropertyBundle\Exception\EntityNotFoundException;
+use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Repository\PropertyRepositoryInterface;
 
 class PropertyService
 {
+    private DefinitionRepository $definitionRepository;
     /**
      * @var array<string, array<string, string>> list of all extendable classes
      */
@@ -55,6 +58,47 @@ class PropertyService
         }
 
         $this->propertyRepository = $this->entityManager->getRepository(AbstractProperty::class);
+        $this->definitionRepository = $this->entityManager->getRepository(Definition::class);
+    }
+
+    /**
+     * Delete all properties from an entity. Especially used because we cannot set orphanRemoval to true.
+     */
+    public function deleteAll(LinkedInterface $entity, bool $flush = false): int
+    {
+        $deleted = $this->propertyRepository->deleteByEntity($entity);
+
+        if ($flush) {
+            $this->entityManager->flush();
+        }
+
+        return $deleted;
+    }
+
+    /**
+     * @return Collection<int, PropertyInterface>
+     */
+    public function getAllProperties(LinkedInterface $entity): Collection
+    {
+        $collection = new ArrayCollection();
+        $properties = $this->getProperties($entity);
+        foreach ($properties as $property) {
+            $collection->add($property);
+        }
+
+        // Complete with definition
+        $definitions = $this->definitionRepository->findByClassname($entity::class);
+
+        foreach ($definitions as $definition) {
+            if ($this->collectionHasProperty($collection, $definition)) {
+                continue;
+            }
+
+            $property = $this->createProperty($definition, $entity);
+            $collection->add($property);
+        }
+
+        return $collection;
     }
 
     /**
@@ -110,7 +154,6 @@ class PropertyService
      */
     public function getPropertiesDto(ExtendableInterface $extendableEntity): array
     {
-        // FIXME this code doesn't catch the properties without connection (left outer join)
         $propertiesDto = [];
         foreach ($extendableEntity->getProperties() as $property) {
             $propertiesDto[] = $this->getPropertyDto($property);
@@ -128,6 +171,32 @@ class PropertyService
         }
 
         return false;
+    }
+
+    private function collectionHasProperty(ArrayCollection $collection, DefinitionInterface $definition): bool
+    {
+        foreach ($collection as $property) {
+            if ($property->getDefinition()->getName() === $definition->getName()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private function createProperty(DefinitionInterface $definition, LinkedInterface $entity): PropertyInterface
+    {
+        $property = match ($definition->getType()) {
+            DefinitionInterface::TYPE_TEXT => new StringProperty($definition),
+            DefinitionInterface::TYPE_INTEGER => new IntegerProperty($definition),
+            DefinitionInterface::TYPE_BOOLEAN => new BoolProperty($definition),
+            DefinitionInterface::TYPE_FLOAT => new FloatProperty($definition),
+            default => new NonTypedProperty($definition),
+        };
+
+        $property->setEntity($entity);
+
+        return $property;
     }
 
     private function getPropertyDto(PropertyInterface $property): PropertyDto

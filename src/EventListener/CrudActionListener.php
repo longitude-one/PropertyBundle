@@ -11,13 +11,16 @@
 
 namespace LongitudeOne\PropertyBundle\EventListener;
 
-use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\AssetsDto;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterCrudActionEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
+use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
-use JetBrains\PhpStorm\ArrayShape;
+use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
+use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Psr\Log\LoggerInterface;
@@ -34,12 +37,14 @@ class CrudActionListener implements EventSubscriberInterface
     ) {
     }
 
-    #[ArrayShape([AfterCrudActionEvent::class => 'string', BeforeCrudActionEvent::class => 'string'])]
     public static function getSubscribedEvents(): array
     {
         return [
             AfterCrudActionEvent::class => 'afterCrudActionEvent',
             BeforeCrudActionEvent::class => 'beforeCrudActionEvent',
+            AfterEntityDeletedEvent::class => 'beforeEntityDeletedEvent',
+            AfterEntityUpdatedEvent::class => 'afterEntityUpdatedEvent',
+            AfterEntityPersistedEvent::class => 'afterEntityPersistedEvent',
         ];
     }
 
@@ -70,52 +75,74 @@ class CrudActionListener implements EventSubscriberInterface
         };
     }
 
+    public function afterEntityPersistedEvent(AfterEntityPersistedEvent $event): void
+    {
+        // TODO use the form as soon as this feature is accepted: https://github.com/EasyCorp/EasyAdminBundle/issues/5587
+    }
+
+    public function afterEntityUpdatedEvent(AfterEntityUpdatedEvent $event): void
+    {
+        // TODO use the form as soon as this feature is accepted: https://github.com/EasyCorp/EasyAdminBundle/issues/5587
+    }
+
     public function beforeCrudActionEvent(BeforeCrudActionEvent $event): void
     {
-    }
-
-    protected function getFieldAssets(AfterCrudActionEvent $event, FieldCollection $fieldDtos): AssetsDto
-    {
-        $fieldAssetsDto = new AssetsDto();
-        $currentPageName = $event->getAdminContext()?->getCrud()?->getCurrentPage();
-        foreach ($fieldDtos as $fieldDto) {
-            $fieldAssetsDto = $fieldAssetsDto->mergeWith($fieldDto->getAssets()->loadedOn($currentPageName));
+        // Is extendable entity declared?
+        if (null === $event->getAdminContext() || !$this->propertyService->has($event->getAdminContext()->getEntity()->getFqcn())) {
+            return;
         }
 
-        return $fieldAssetsDto;
+        if ($event->isPropagationStopped()) {
+            return;
+        }
+
+        if (!$event->getAdminContext()->getEntity()->isAccessible()) {
+            return;
+        }
+
+        $instance = $event->getAdminContext()->getEntity()->getInstance();
+        if (!$instance instanceof ExtendableInterface || !$instance instanceof LinkedInterface) {
+            return;
+        }
+
+        $this->completeExtandableEntity($instance);
     }
 
-    private function initInstance(AfterCrudActionEvent $event): ExtendableInterface
+    public function beforeEntityDeletedEvent(BeforeEntityDeletedEvent $event): void
+    {
+        // Delete all properties of this entity
+        $this->propertyService->deleteAll($event->getEntityInstance(), false);
+    }
+
+    private function completeExtandableEntity(LinkedInterface $instance): LinkedInterface
     {
         // Get all properties for this entity. AdminContext is not null because of the first test.
-        $instance = $event->getAdminContext()->getEntity()->getInstance();
-        $instance->setProperties($this->propertyService->getProperties($instance));
+        $instance->setProperties($this->propertyService->getAllProperties($instance));
 
         return $instance;
     }
 
+    private function getInstance(AdminContext $adminContext): ExtendableInterface
+    {
+        return $adminContext->getEntity()->getInstance();
+    }
+
     private function onDetailPage(AfterCrudActionEvent $event): void
     {
-        $instance = $this->initInstance($event);
-
-        foreach ($instance->getProperties() as $property) {
-            $this->logger->debug('PropertyBundle: Property found: '.$property->getDefinition()->getName().': '.$property->getValue());
-        }
-
-        $propertiesDto = $this->propertyService->getPropertiesDto($instance);
+        $propertiesDto = $this->propertyService->getPropertiesDto($this->getInstance($event->getAdminContext()));
         $event->getResponseParameters()->set('lopb.properties', $propertiesDto);
     }
 
     private function onEditPage(AfterCrudActionEvent $event): void
     {
-        $instance = $this->initInstance($event);
-
         /** @var Form $form */
         $form = $event->getResponseParameters()->get('edit_form');
 
         // TODO add a fieldset for our custom properties
+        $instance = $this->getInstance($event->getAdminContext());
         foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {
             // FIXME replace TextType::class by a more precise class
+            // TODO complete options
             $form->add($propertyDto->getName(), TextType::class, ['mapped' => false]);
         }
     }
@@ -127,6 +154,16 @@ class CrudActionListener implements EventSubscriberInterface
 
     private function onNewPage(AfterCrudActionEvent $event): void
     {
-        $this->logger->debug('EasyAdmin Crud NEW Page intercepted for properties');
+        /** @var Form $form */
+        $form = $event->getResponseParameters()->get('new_form');
+
+        // TODO add a fieldset for our custom properties
+        $instance = $this->getInstance($event->getAdminContext());
+        $this->completeExtandableEntity($instance);
+        foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {
+            // FIXME replace TextType::class by a more precise class
+            // TODO complete options
+            $form->add($propertyDto->getName(), TextType::class, ['mapped' => false]);
+        }
     }
 }

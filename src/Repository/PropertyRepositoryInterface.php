@@ -17,6 +17,11 @@ use LongitudeOne\PropertyBundle\Entity\PropertyInterface;
 interface PropertyRepositoryInterface
 {
     /**
+     * @return int number of properties deleted
+     */
+    public function deleteByEntity(LinkedInterface $entity): int;
+
+    /**
      * @return array<int,PropertyInterface>
      */
     public function findByEntity(LinkedInterface $linkedEntity): iterable;

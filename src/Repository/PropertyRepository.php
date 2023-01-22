@@ -30,6 +30,32 @@ class PropertyRepository extends ServiceEntityRepository implements PropertyRepo
         parent::__construct($registry, $entityClass);
     }
 
+    public function deleteByEntity(LinkedInterface $entity): int
+    {
+        $propertiesId = $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->join('p.definition', 'd')
+            ->where('p.entityId = :entityId')
+            ->andWhere('d.entityClassname = :className')
+            ->setParameter('entityId', $entity->getLinkedId())
+            ->setParameter('className', $entity->getLinkedClassname())
+            ->getQuery()
+            ->execute()
+        ;
+
+        if (empty($propertiesId)) {
+            return 0;
+        }
+
+        return $this->createQueryBuilder('p')
+            ->delete()
+            ->where('p.id in (:propertiesId)')
+            ->setParameter('propertiesId', $propertiesId)
+            ->getQuery()
+            ->execute()
+        ;
+    }
+
     /**
      * @return array<int,PropertyInterface>
      */
@@ -37,7 +63,7 @@ class PropertyRepository extends ServiceEntityRepository implements PropertyRepo
     {
         /** @var array<int,PropertyInterface> $properties */
         $properties = $this->createQueryBuilder('p')
-            ->leftJoin('p.definition', 'd')
+            ->join('p.definition', 'd')
             ->where('p.entityId = :entityId')
             ->andWhere('d.entityClassname = :className')
             ->setParameter('entityId', $linkedEntity->getLinkedId())

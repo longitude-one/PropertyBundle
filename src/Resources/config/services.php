@@ -21,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use LongitudeOne\PropertyBundle\Controller\DefinitionCrudController;
 use LongitudeOne\PropertyBundle\EventListener\CrudActionListener;
+use LongitudeOne\PropertyBundle\EventListener\EntityLifeCycleListener;
 use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
@@ -75,13 +76,17 @@ return static function (ContainerConfigurator $container) {
 
     // Subscribers
     $container->services()
-        //TODO Split into two different listeners (SOLID)
         ->set(CrudActionListener::class)
         ->arg(0, service(PropertyService::class))
         ->arg(1, service(DefinitionService::class))
         ->arg(2, new Reference('logger'))
         ->tag('kernel.event_listener', ['event' => AfterCrudActionEvent::class, 'method' => 'afterCrudActionEvent'])
         ->tag('kernel.event_listener', ['event' => BeforeCrudActionEvent::class, 'method' => 'beforeCrudActionEvent'])
+    ;
+
+    $container->services()
+        ->set(EntityLifeCycleListener::class)
+        ->arg(0, service(PropertyService::class))
         ->tag('kernel.event_listener', ['event' => BeforeEntityDeletedEvent::class, 'method' => 'beforeEntityDeletedEvent'])
         ->tag('kernel.event_listener', ['event' => AfterEntityUpdatedEvent::class, 'method' => 'afterEntityUpdatedEvent'])
         ->tag('kernel.event_listener', ['event' => AfterEntityPersistedEvent::class, 'method' => 'afterEntityPersistedEvent'])

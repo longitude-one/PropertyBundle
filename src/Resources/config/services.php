@@ -17,7 +17,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
-use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use LongitudeOne\PropertyBundle\Controller\DefinitionCrudController;
 use LongitudeOne\PropertyBundle\EventListener\CrudActionListener;
@@ -90,7 +89,6 @@ return static function (ContainerConfigurator $container) {
         ->tag('kernel.event_listener', ['event' => BeforeEntityDeletedEvent::class, 'method' => 'beforeEntityDeletedEvent'])
         ->tag('kernel.event_listener', ['event' => AfterEntityUpdatedEvent::class, 'method' => 'afterEntityUpdatedEvent'])
         ->tag('kernel.event_listener', ['event' => AfterEntityPersistedEvent::class, 'method' => 'afterEntityPersistedEvent'])
-        ->tag('kernel.event_listener', ['event' => BeforeEntityPersistedEvent::class, 'method' => 'beforeEntityPersistedEvent'])
     ;
 
     // CRUD Controllers

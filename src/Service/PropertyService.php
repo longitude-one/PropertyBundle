@@ -173,6 +173,9 @@ class PropertyService
         return false;
     }
 
+    /**
+     * @param ArrayCollection<int, PropertyInterface> $collection
+     */
     private function collectionHasProperty(ArrayCollection $collection, DefinitionInterface $definition): bool
     {
         foreach ($collection as $property) {

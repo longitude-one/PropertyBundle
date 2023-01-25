@@ -44,11 +44,21 @@ parameters:
 			path: ../../src/Repository/PropertyRepository.php
 
 		-
-			message: "#^Cannot call method getEntity\\(\\) on EasyCorp\\\\Bundle\\\\EasyAdminBundle\\\\Context\\\\AdminContext\\|null\\.$#"
+			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\EventListener\\\\CrudActionListener\\:\\:\\$definitionService is never read, only written\\.$#"
 			count: 1
 			path: ../../src/EventListener/CrudActionListener.php
 
 		-
-			message: "#^Property LongitudeOne\\\\PropertyBundle\\\\EventListener\\\\CrudActionListener\\:\\:\\$definitionService is never read, only written\\.$#"
-			count: 1
+			message: "#^Parameter \\#1 \\$adminContext of method LongitudeOne\\\\PropertyBundle\\\\EventListener\\\\CrudActionListener\\:\\:getInstance\\(\\) expects EasyCorp\\\\Bundle\\\\EasyAdminBundle\\\\Context\\\\AdminContext, EasyCorp\\\\Bundle\\\\EasyAdminBundle\\\\Context\\\\AdminContext\\|null given\\.$#"
+			count: 3
 			path: ../../src/EventListener/CrudActionListener.php
+
+		-
+			message: "#^Method LongitudeOne\\\\PropertyBundle\\\\Repository\\\\DefinitionRepository\\:\\:findByClassname\\(\\) should return array\\<int, LongitudeOne\\\\PropertyBundle\\\\Entity\\\\Definition\\> but returns mixed\\.$#"
+			count: 1
+			path: ../../src/Repository/DefinitionRepository.php
+
+		-
+			message: "#^Method LongitudeOne\\\\PropertyBundle\\\\Repository\\\\PropertyRepository\\:\\:deleteByEntity\\(\\) should return int but returns mixed\\.$#"
+			count: 1
+			path: ../../src/Repository/PropertyRepository.php

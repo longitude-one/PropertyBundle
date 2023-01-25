@@ -23,4 +23,9 @@ interface ExtendableInterface
     public function getProperties(): Collection;
 
     public function removeProperty(PropertyInterface $property): self;
+
+    /**
+     * @param Collection<int, PropertyInterface> $properties
+     */
+    public function setProperties(Collection $properties): self;
 }

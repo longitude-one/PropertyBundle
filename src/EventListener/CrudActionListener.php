@@ -19,12 +19,17 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeCrudActionEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
+use LongitudeOne\PropertyBundle\Dto\PropertyDto;
+use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Form;
 
@@ -116,10 +121,45 @@ class CrudActionListener implements EventSubscriberInterface
 
     private function completeExtandableEntity(LinkedInterface $instance): LinkedInterface
     {
-        // Get all properties for this entity. AdminContext is not null because of the first test.
-        $instance->setProperties($this->propertyService->getAllProperties($instance));
+        if ($instance instanceof ExtendableInterface) {
+            // Get all properties for this entity. AdminContext is not null because of the first test.
+            $instance->setProperties($this->propertyService->getAllProperties($instance));
+        }
 
         return $instance;
+    }
+
+    private function completeForm(Form $form, PropertyDto $propertyDto): void
+    {
+        $form->add(
+            $propertyDto->getName(),
+            $this->getFormType($propertyDto->getType()),
+            [
+                // TODO complete options : "action", "allow_file_upload", "attr", "attr_translation_parameters", "auto_initialize", "block_name", "block_prefix", "by_reference", "compound", "data", "data_class", "disabled", "ea_crud_form", "empty_data", "error_bubbling", "form_attr", "getter", "help", "help_attr", "help_html", "help_translation_parameters", "inherit_data", "invalid_message", "invalid_message_parameters", "is_empty_callback", "label", "label_attr", "label_format", "label_html", "label_translation_parameters", "mapped", "method", "post_max_size_message", "priority", "property_path", "required", "row_attr", "setter", "translation_domain", "trim", "upload_max_size_message"
+                'data' => $propertyDto->getValue(),
+                'label' => $propertyDto->getLabel(),
+                'mapped' => false,
+                // TODO create an help description in the definition to allow admin to add a description to help the user
+//                    'help' => $propertyDto->getHelp(),
+                // TODO create some options in propertyDto and definition to allow admin to configure the field
+//                    'required' => $propertyDto->isRequired(),
+                'translation_domain' => 'messages', // FIXME use translation domain where element are set in database
+                // TODO create a placeholder in the definition to allow admin to add a placeholder to help the user
+//                    'attr' => [
+//                        'placeholder' => $propertyDto->getPlaceholder(),
+//                    ],
+            ]
+        );
+    }
+
+    private function getFormType(int $definitionType): string
+    {
+        return match ($definitionType) {
+            DefinitionInterface::TYPE_INTEGER => IntegerType::class,
+            DefinitionInterface::TYPE_FLOAT => NumberType::class,
+            DefinitionInterface::TYPE_BOOLEAN => CheckboxType::class,
+            default => TextType::class,
+        };
     }
 
     private function getInstance(AdminContext $adminContext): ExtendableInterface
@@ -129,7 +169,9 @@ class CrudActionListener implements EventSubscriberInterface
 
     private function onDetailPage(AfterCrudActionEvent $event): void
     {
-        $propertiesDto = $this->propertyService->getPropertiesDto($this->getInstance($event->getAdminContext()));
+        // $event->getAdminContext() cannot be null because of the first test.
+        $instance = $this->getInstance($event->getAdminContext());
+        $propertiesDto = $this->propertyService->getPropertiesDto($instance);
         $event->getResponseParameters()->set('lopb.properties', $propertiesDto);
     }
 
@@ -140,10 +182,9 @@ class CrudActionListener implements EventSubscriberInterface
 
         // TODO add a fieldset for our custom properties
         $instance = $this->getInstance($event->getAdminContext());
+        // put that in a service
         foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {
-            // FIXME replace TextType::class by a more precise class
-            // TODO complete options
-            $form->add($propertyDto->getName(), TextType::class, ['mapped' => false]);
+            $this->completeForm($form, $propertyDto);
         }
     }
 
@@ -159,11 +200,12 @@ class CrudActionListener implements EventSubscriberInterface
 
         // TODO add a fieldset for our custom properties
         $instance = $this->getInstance($event->getAdminContext());
-        $this->completeExtandableEntity($instance);
+        if ($instance instanceof LinkedInterface) {
+            $this->completeExtandableEntity($instance);
+        }
+
         foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {
-            // FIXME replace TextType::class by a more precise class
-            // TODO complete options
-            $form->add($propertyDto->getName(), TextType::class, ['mapped' => false]);
+            $this->completeForm($form, $propertyDto);
         }
     }
 }

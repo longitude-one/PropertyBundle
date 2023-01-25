@@ -27,8 +27,7 @@ use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
     self::NON_TYPED => NonTypedProperty::class,
     Types::STRING => StringProperty::class,
 ])]
-// TODO add definition_id to this index
-#[ORM\Index(columns: ['entity_id'], name: 'lopb_index_property_entity_id')]
+#[ORM\Index(columns: ['entity_id', 'definition_id'], name: 'lopb_index_property_entity_id')]
 #[ORM\Index(columns: ['bool_value'], name: 'lopb_index_bool_property_value')]
 #[ORM\Index(columns: ['float_value'], name: 'lopb_index_float_property_value')]
 #[ORM\Index(columns: ['int_value'], name: 'lopb_index_integer_property_value')]

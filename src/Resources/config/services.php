@@ -21,7 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Provider\AdminContextProvider;
 use LongitudeOne\PropertyBundle\Controller\DefinitionCrudController;
 use LongitudeOne\PropertyBundle\EventListener\CrudActionListener;
 use LongitudeOne\PropertyBundle\EventListener\EntityLifeCycleListener;
-use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
+use LongitudeOne\PropertyBundle\Repository\BooleanPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Repository\FloatPropertyRepository;
 use LongitudeOne\PropertyBundle\Repository\IntegerPropertyRepository;
@@ -40,7 +40,7 @@ use Symfony\Component\DependencyInjection\Reference;
 return static function (ContainerConfigurator $container) {
     // Repositories
     $repositories = [
-        BoolPropertyRepository::class,
+        BooleanPropertyRepository::class,
         DefinitionRepository::class,
         FloatPropertyRepository::class,
         IntegerPropertyRepository::class,

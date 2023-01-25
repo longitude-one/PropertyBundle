@@ -11,18 +11,18 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Unit\Entity;
 
-use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\BooleanProperty;
 use LongitudeOne\PropertyBundle\Entity\Definition;
 use PHPUnit\Framework\TestCase;
 
-class BoolPropertyTest extends TestCase
+class BooleanPropertyTest extends TestCase
 {
-    private BoolProperty $property;
+    private BooleanProperty $property;
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->property = new BoolProperty(new Definition());
+        $this->property = new BooleanProperty(new Definition());
     }
 
     public function testConstructor(): void

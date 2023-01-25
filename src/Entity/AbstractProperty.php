@@ -21,7 +21,7 @@ use LongitudeOne\PropertyBundle\Repository\PropertyRepository;
 #[ORM\InheritanceType('SINGLE_TABLE')]
 #[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
 #[ORM\DiscriminatorMap([
-    Types::BOOLEAN => BoolProperty::class,
+    Types::BOOLEAN => BooleanProperty::class,
     Types::FLOAT => FloatProperty::class,
     Types::INTEGER => IntegerProperty::class,
     self::NON_TYPED => NonTypedProperty::class,

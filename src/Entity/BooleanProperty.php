@@ -13,11 +13,10 @@ namespace LongitudeOne\PropertyBundle\Entity;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use LongitudeOne\PropertyBundle\Repository\BoolPropertyRepository;
+use LongitudeOne\PropertyBundle\Repository\BooleanPropertyRepository;
 
-#[ORM\Entity(repositoryClass: BoolPropertyRepository::class)]
-// FIXME rename to BooleanProperty
-class BoolProperty extends AbstractProperty implements PropertyInterface
+#[ORM\Entity(repositoryClass: BooleanPropertyRepository::class)]
+class BooleanProperty extends AbstractProperty implements PropertyInterface
 {
     #[ORM\Column(name: 'bool_value', type: Types::BOOLEAN)]
     private ?bool $value = null;

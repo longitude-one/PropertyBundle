@@ -12,12 +12,12 @@
 namespace LongitudeOne\PropertyBundle\Repository;
 
 use Doctrine\Persistence\ManagerRegistry;
-use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\BooleanProperty;
 
-class BoolPropertyRepository extends PropertyRepository
+class BooleanPropertyRepository extends PropertyRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, BoolProperty::class);
+        parent::__construct($registry, BooleanProperty::class);
     }
 }

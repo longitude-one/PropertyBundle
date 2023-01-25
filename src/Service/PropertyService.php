@@ -20,7 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use LongitudeOne\PropertyBundle\Dto\PropertyDto;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
-use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\BooleanProperty;
 use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
 use LongitudeOne\PropertyBundle\Entity\ExtendableInterface;
@@ -192,7 +192,7 @@ class PropertyService
         $property = match ($definition->getType()) {
             DefinitionInterface::TYPE_TEXT => new StringProperty($definition),
             DefinitionInterface::TYPE_INTEGER => new IntegerProperty($definition),
-            DefinitionInterface::TYPE_BOOLEAN => new BoolProperty($definition),
+            DefinitionInterface::TYPE_BOOLEAN => new BooleanProperty($definition),
             DefinitionInterface::TYPE_FLOAT => new FloatProperty($definition),
             default => new NonTypedProperty($definition),
         };
@@ -219,7 +219,7 @@ class PropertyService
         $field->setFieldFqcn(match ($property->getDefinition()->getType()) {
             DefinitionInterface::TYPE_TEXT => StringProperty::class,
             DefinitionInterface::TYPE_INTEGER => IntegerProperty::class,
-            DefinitionInterface::TYPE_BOOLEAN => BoolProperty::class,
+            DefinitionInterface::TYPE_BOOLEAN => BooleanProperty::class,
             DefinitionInterface::TYPE_FLOAT => FloatProperty::class,
             default => NonTypedProperty::class,
         });

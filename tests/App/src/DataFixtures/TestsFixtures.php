@@ -13,7 +13,7 @@ namespace LongitudeOne\PropertyBundle\Tests\App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
-use LongitudeOne\PropertyBundle\Entity\BoolProperty;
+use LongitudeOne\PropertyBundle\Entity\BooleanProperty;
 use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Entity\DefinitionInterface;
 use LongitudeOne\PropertyBundle\Entity\FloatProperty;
@@ -111,7 +111,7 @@ class TestsFixtures extends Fixture
         ];
 
         foreach ($alives as $alive => $character) {
-            $aliveProperty = new BoolProperty($aliveDefinition);
+            $aliveProperty = new BooleanProperty($aliveDefinition);
             $aliveProperty->setEntity($character);
             $aliveProperty->setValue($alive);
             $manager->persist($aliveProperty);

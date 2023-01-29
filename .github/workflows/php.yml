@@ -52,13 +52,14 @@ jobs:
       - name: install PHPCSFIXER
         run: composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
 
+      # On PHP 8.2, we run the test suite with PHP_CS_FIXER_IGNORE_ENV as long as the php-cs-fixer dependency is not full compatible with PHP 8.2
       - name: PHP-CS-FIXER test on /src with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         if: ${{ matrix.php == '8.2' }}
-        run: PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
+        run: PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHP-CS-FIXER test on /tests with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         if: ${{ matrix.php == '8.1' }}
-        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
+        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@master

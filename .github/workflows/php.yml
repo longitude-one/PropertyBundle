@@ -53,11 +53,11 @@ jobs:
         run: composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
 
       - name: PHP-CS-FIXER test on /src with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        if: ${{ matrix.php == '8.1' }}
+        if: ${{ matrix.php == '8.2' }}
         run: PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHP-CS-FIXER test on /tests with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        if: ${{ matrix.php == '8.2' }}
+        if: ${{ matrix.php == '8.1' }}
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
 
       - name: PHPStan Static Analysis

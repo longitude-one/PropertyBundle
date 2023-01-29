@@ -70,7 +70,7 @@ class DefinitionCrudController extends AbstractCrudController
             ->showEntityActionsInlined()
 
 //            ->setFormOptions([
-//                'validation_groups' => ['Default']
+//                'validation_groups' => ['lopb_validation_groups']
 //            ])
         ;
     }

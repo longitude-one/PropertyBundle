@@ -13,7 +13,7 @@ doctrine:
         mappings:
             LongitudeOne\PropertyBundle\Tests\App:
                 is_bundle: false
-                dir: '%kernel.project_dir%/tests/App/src/Entity'
+                dir: '%kernel.project_dir%/src/Entity'
                 prefix: 'LongitudeOne\PropertyBundle\Tests\App\Entity'
 
 when@test:

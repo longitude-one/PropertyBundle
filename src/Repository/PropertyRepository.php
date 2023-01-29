@@ -12,6 +12,7 @@
 namespace LongitudeOne\PropertyBundle\Repository;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 use LongitudeOne\PropertyBundle\Entity\AbstractProperty;
 use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
@@ -76,7 +77,7 @@ class PropertyRepository extends ServiceEntityRepository implements PropertyRepo
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException TODO Create uniq index to avoid this kind of bug
+     * @throws NonUniqueResultException TODO Create uniq index to avoid this kind of bug
      */
     public function findByEntityAndName(LinkedInterface $linkedEntity, string $propertyName): ?PropertyInterface
     {

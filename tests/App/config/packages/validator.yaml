@@ -4,8 +4,9 @@ framework:
 
         # Enables validator auto-mapping support.
         # For instance, basic validation constraints will be inferred from Doctrine's metadata.
-        #auto_mapping:
-        #    App\Entity\: []
+        auto_mapping:
+            LongitudeOne\PropertyBundle\Tests\App\Entity\: []
+            LongitudeOne\PropertyBundle\Entity\: []
 
 when@test:
     framework:

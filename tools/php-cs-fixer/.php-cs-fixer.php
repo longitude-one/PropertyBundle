@@ -6,7 +6,13 @@ $header = str_replace("%year%", date('Y'), $header);
 $finder = PhpCsFixer\Finder::create()
     ->in([
         __DIR__ . '/../../src/',
-        __DIR__ . '/../../tests/',
+        __DIR__ . '/../../tests/App/config/',
+        __DIR__ . '/../../tests/App/public/',
+        __DIR__ . '/../../tests/App/src/',
+        __DIR__ . '/../../tests/Application/',
+        __DIR__ . '/../../tests/Functional/',
+        __DIR__ . '/../../tests/Tools/',
+        __DIR__ . '/../../tests/Unit/',
     ])
 ;
 

@@ -6,7 +6,14 @@ parameters:
 	level: 9
 	paths:
 		- ../../src
-		- ../../tests
+		- ../../tests/App/config
+		- ../../tests/App/src
+		- ../../tests/App/public
+		- ../../tests/Application
+		- ../../tests/Functional
+		- ../../tests/Tools
+		- ../../tests/Unit
+
 	ignoreErrors:
 		-
 			message: "#^Call to an undefined method object\\:\\:getMetadataFactory\\(\\)\\.$#"

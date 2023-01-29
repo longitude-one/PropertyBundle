@@ -27,4 +27,9 @@ class Kernel extends BaseKernel
     {
         return $this->getProjectDir().'/var/'.$this->environment.'/log';
     }
+
+    public function getProjectDir(): string
+    {
+        return dirname(__DIR__, 1);
+    }
 }

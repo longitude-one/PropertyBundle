@@ -42,6 +42,7 @@ jobs:
           key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}
+
       - name: Composer update with PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         run: SYMFONY_REQUIRE=${{ matrix.symfony }} composer update --prefer-dist --no-progress
 
@@ -53,7 +54,7 @@ jobs:
 
 # FIXME Run it only on PHP8.1 or add it when PhpCsFixer will be compatible with PHP8.2
 #      - name: PHP-CS-FIXER test on /src with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-#        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
+#        run: PHP_CS_FIXER_IGNORE_ENV=1 tools/php-cs-fixer/vendor/bin/php-cs-fixer fix src --config=tools/php-cs-fixer/.php-cs-fixer.php
 #
 #      - name: PHP-CS-FIXER test on /tests with ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
 #        run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix tests --config=tools/php-cs-fixer/.php-cs-fixer.php
@@ -61,7 +62,6 @@ jobs:
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@master
         with:
-          path: src/ tests/
           level: 9
           configuration: tools/php-stan/php-stan.neon
           memory_limit: 256M

@@ -15,9 +15,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityDeletedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityUpdatedEvent;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityDeletedEvent;
+use LongitudeOne\PropertyBundle\Entity\LinkedInterface;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Form\Form;
 
 class EntityLifeCycleListener implements EventSubscriberInterface
 {
@@ -46,7 +46,9 @@ class EntityLifeCycleListener implements EventSubscriberInterface
 
     public function beforeEntityDeletedEvent(BeforeEntityDeletedEvent $event): void
     {
-        // Delete all properties of this entity
-        $this->propertyService->deleteAll($event->getEntityInstance(), false);
+        // Delete all properties of this entity when it is a linked entity
+        if ($event->getEntityInstance() instanceof LinkedInterface) {
+            $this->propertyService->deleteAll($event->getEntityInstance(), false);
+        }
     }
 }

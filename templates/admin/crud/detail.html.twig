@@ -5,8 +5,8 @@
         {{ _self.render_detail_fields_with_tabs(entity, field_layout) }}
     {% else %}
         {{ _self.render_detail_fields(entity, field_layout.fields) }}
-        <h2>{{ 'lopb.properties.title' | trans({}, 'LongitudeOnePropertyBundle') }}</h2>
-        {{ _self.render_detail_properties(lopb.properties) }}
+        <h2>{{ 'properties.title' | trans({}, 'LongitudeOnePropertyBundle') }}</h2>
+        {{ _self.render_detail_properties(properties) }}
     {% endif %}
 {% endblock detail_fields %}
 

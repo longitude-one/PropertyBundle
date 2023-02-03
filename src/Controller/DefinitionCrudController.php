@@ -22,12 +22,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use LongitudeOne\PropertyBundle\Entity\Definition;
 use LongitudeOne\PropertyBundle\Service\DefinitionService;
 use LongitudeOne\PropertyBundle\Service\PropertyService;
+use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DefinitionCrudController extends AbstractCrudController
 {
     public function __construct(
-        private readonly TranslatorInterface $translator,
         private readonly PropertyService $propertyService,
         private readonly DefinitionService $definitionService,
     ) {
@@ -53,19 +53,19 @@ class DefinitionCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular($this->trans('lopb.definition.label'))
-            ->setEntityLabelInPlural($this->trans('lopb.definitions.label'))
+            ->setEntityLabelInSingular(new TranslatableMessage('definition.label', [], 'LongitudeOnePropertyBundle'))
+            ->setEntityLabelInPlural(new TranslatableMessage('definitions.label', [], 'LongitudeOnePropertyBundle'))
 
             ->setSearchFields(['name'])
             ->setDefaultSort(['name' => 'ASC', 'entityClassname' => 'ASC'])
 
-            ->setPageTitle('index', $this->trans('lopb.definition.index.title'))
-            ->setPageTitle('edit', $this->trans('lopb.definition.edit.title'))
-            ->setPageTitle('new', $this->trans('lopb.definition.new.title'))
+            ->setPageTitle('index', new TranslatableMessage('definition.index.title', [], 'LongitudeOnePropertyBundle'))
+            ->setPageTitle('edit', new TranslatableMessage('definition.edit.title', [], 'LongitudeOnePropertyBundle'))
+            ->setPageTitle('new', new TranslatableMessage('definition.new.title', [], 'LongitudeOnePropertyBundle'))
 
-            ->setHelp('index', $this->trans('lopb.definition.index.help'))
-            ->setHelp('edit', $this->trans('lopb.definition.edit.help'))
-            ->setHelp('new', $this->trans('lopb.definition.new.help'))
+            ->setHelp('index', new TranslatableMessage('definition.index.help', [], 'LongitudeOnePropertyBundle'))
+            ->setHelp('edit', new TranslatableMessage('definition.edit.help', [], 'LongitudeOnePropertyBundle'))
+            ->setHelp('new', new TranslatableMessage('definition.new.help', [], 'LongitudeOnePropertyBundle'))
 
             ->showEntityActionsInlined()
 
@@ -79,34 +79,27 @@ class DefinitionCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm()
-                ->setHelp('lopb.definition.field.id.help')
-                ->setLabel('lopb.definition.field.id.label')
+                ->setHelp(new TranslatableMessage('definition.field.id.help', [], 'LongitudeOnePropertyBundle'))
+                ->setLabel(new TranslatableMessage('definition.field.id.label', [], 'LongitudeOnePropertyBundle'))
                 ->onlyOnDetail(),
             TextField::new('name')
                 ->setMaxLength(31)
-                ->setHelp('lopb.definition.field.name.help')
-                ->setLabel('lopb.definition.field.name.label'),
+                ->setHelp(new TranslatableMessage('definition.field.name.help', [], 'LongitudeOnePropertyBundle'))
+                ->setLabel(new TranslatableMessage('definition.field.name.label', [], 'LongitudeOnePropertyBundle')),
             ChoiceField::new('type')
-                ->setHelp('lopb.definition.field.entityClassname.help')
-                ->setLabel('lopb.definition.field.entityClassname.label')
+                ->setHelp(new TranslatableMessage('definition.field.type.help', [], 'LongitudeOnePropertyBundle'))
+                ->setLabel(new TranslatableMessage('definition.field.type.label', [], 'LongitudeOnePropertyBundle'))
                 ->setChoices($this->definitionService->getChoices())
                 ->hideWhenUpdating(),
             ChoiceField::new('entityClassname')
-                ->setHelp('lopb.definition.field.entityClassname.help')
-                ->setLabel('lopb.definition.field.entityClassname.label')
+                ->setHelp(new TranslatableMessage('definition.field.entityClassname.help', [], 'LongitudeOnePropertyBundle'))
+                ->setLabel(new TranslatableMessage('definition.field.entityClassname.label', [], 'LongitudeOnePropertyBundle'))
                 ->setChoices($this->propertyService->getChoices())
+                ->formatValue(fn (string $value) => 'lopb.keyword.' . $value)
                 ->hideWhenUpdating(),
             BooleanField::new('enabled')
-                ->setHelp('lopb.definition.field.enabled.help')
-                ->setLabel('lopb.definition.field.enabled.label'),
+                ->setHelp(new TranslatableMessage('definition.field.enabled.help', [], 'LongitudeOnePropertyBundle'))
+                ->setLabel(new TranslatableMessage('definition.field.enabled.label', [], 'LongitudeOnePropertyBundle')),
         ];
-    }
-
-    /**
-     * Simple shortcut.
-     */
-    private function trans(string $id): string
-    {
-        return $this->translator->trans($id, [], 'LongitudeOnePropertyBundle');
     }
 }

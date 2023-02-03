@@ -1,26 +1,50 @@
-lopb.entities.manage.title: 'Extendable entities'
-lopb.entities.manage.help: "This page helps you to determine which entities can be extended. If you don't find your entities in the below list, check that you added it in the extendable_entities section of the config/properties.yaml file."
-lopb.menu.extendable-entities: 'Extendable entities'
-lopb.entities.name: 'Entity'
-lopb.entities.class: 'Class'
-lopb.entities.extendable: 'Extendable'
-lopb.definition.label: 'Definition'
-lopb.definition.new.title: 'Properties definition management'
-lopb.definition.new.help: 'Properties definition management'
-lopb.definition.index.title: 'Properties definition management'
-lopb.definition.index.help: 'This section helps you to manage all your properties. Generally, when an administrator want to create a new property to any entity, he needs his developer to create them in the database. This bundle help you to create, edit or delete properties from this admin panel.'
-lopb.definition.edit.title: 'Properties definition management'
-lopb.definition.edit.help: 'Properties definition management'
-lopb.definitions.label: 'Definitions'
-lopb.entities.actions: 'Actions'
-lopb.entities.show: 'Show'
 definition:
     type:
         boolean: 'Boolean value'
         integer: 'Integer value'
         float: 'Float value'
         text: 'Text value'
-        mixed: 'Integer, float, boolean and text values'
-lopb:
+        mixed: 'Mixed: integer, float, boolean and text values'
+    field:
+        enabled:
+            help: 'When enabled, this property will be available (readable and updatable) in the admin form panel'
+            label: 'Enabled'
+        entityClassname:
+            help: 'Internal entity classname'
+            label: 'Classname'
+        id:
+            help: 'Internal identifier'
+            label: 'Id'
+        name:
+            help: 'This name will appears in the form'
+            label: 'Name'
+        type:
+            help: 'Fix the type of the value accepted by this property. If you choose mixed, you will be able to store any type of value in this property, but you won''t be able to do automatic search.'
+            label: 'Type of values'
+    index:
+        help: 'This section helps you to manage all your properties. Generally, when an administrator want to create a new property to any entity, he needs his developer to create them in the database. This bundle help you to create, edit or delete properties from this admin panel.'
+        title: 'Custom properties definition and management'
+    edit:
+        title: 'Properties definition management'
+        help: 'Properties definition management'
+    label: 'Definition'
+    new:
+        title: 'Properties definition management'
+        help: 'Properties definition management'
+definitions:
+    label: 'Definitions'
+entities:
+    manage:
+        title: 'Extendable entities'
+        help: "This page helps you to determine which entities can be extended. If you don't find your entities in the below list, check that you added it in the extendable_entities section of the config/properties.yaml file."
+    name: 'Entity'
+    class: 'Class'
+    extendable: 'Extendable'
+    actions: 'Actions'
+    show: 'Show'
+menu:
+    extendable-entities: 'Extendable entities'
     properties:
         title: 'Custom properties'
+properties:
+    title: 'Custom properties'

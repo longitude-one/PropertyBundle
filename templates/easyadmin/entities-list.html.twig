@@ -2,29 +2,29 @@
 
 {% trans_default_domain 'LongitudeOnePropertyBundle' %}
 
-{% block content_title %}{{ 'lopb.entities.manage.title' | trans }}{% endblock %}
+{% block content_title %}{{ 'entities.manage.title' | trans }}{% endblock %}
 {% block page_actions %}
 {#    <a class="btn btn-primary" href="..."></a>#}
 {% endblock %}
 
 {% block main %}
-    <p class="alert alert-info">{{ 'lopb.entities.manage.help' | trans }}</p>
+    <p class="alert alert-info">{{ 'entities.manage.help' | trans }}</p>
     <table class="datagrid">
         <thead>
         <tr>
-            <td>{{ 'lopb.entities.name' | trans }}</td>
-            <td>{{ 'lopb.entities.class' | trans }}</td>
-            <td>{{ 'lopb.entities.actions' | trans }}</td>
+            <td>{{ 'entities.name' | trans }}</td>
+            <td>{{ 'entities.class' | trans }}</td>
+            <td>{{ 'entities.actions' | trans }}</td>
         </tr>
         </thead>
         <tbody>
         {% for keyword, entity in entities %}
             <tr>
-                <td>{{ keyword }}</td>
+                <td>{{ ('lopb.keyword.' ~ keyword) | trans({}, 'messages') }}</td>
                 <td><code>{{ entity.class }}</code></td>
                 <td>
-                    <a href="{{ path('longitudeone_property_tests_app_admin_dashboard_show_entity', {'keyword': keyword}) }}" title="{{ 'lopb.entities.show' | trans }}" class="btn">
-                        <span class="sr-only">{{ 'lopb.entities.show' | trans }}</span>
+                    <a href="{{ path('longitudeone_property_tests_app_admin_dashboard_show_entity', {'keyword': keyword}) }}" title="{{ 'entities.show' | trans }}" class="btn">
+                        <span class="sr-only">{{ 'entities.show' | trans }}</span>
                         <i class="fa fa-eye"></i>
                     </a>
                 </td>

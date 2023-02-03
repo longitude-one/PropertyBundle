@@ -61,6 +61,7 @@ class Definition implements DefinitionInterface
 
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
+        dd('je passe par là');
         $metadata->addPropertyConstraint('name', new LongitudeOneAssert\Keyword());
     }
 

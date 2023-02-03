@@ -172,7 +172,7 @@ class CrudActionListener implements EventSubscriberInterface
         // $event->getAdminContext() cannot be null because of the first test.
         $instance = $this->getInstance($event->getAdminContext());
         $propertiesDto = $this->propertyService->getPropertiesDto($instance);
-        $event->getResponseParameters()->set('lopb.properties', $propertiesDto);
+        $event->getResponseParameters()->set('properties', $propertiesDto);
     }
 
     private function onEditPage(AfterCrudActionEvent $event): void

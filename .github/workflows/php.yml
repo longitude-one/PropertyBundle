@@ -60,7 +60,7 @@ jobs:
         run: composer create-project symfony/skeleton:"6.2.*" app --no-interaction
       - name: Setup configuration
         working-directory: tmp/app/
-        run: composer option minimum-stability dev
+        run: composer config minimum-stability dev
       - name: Setup local bundle
         working-directory: tmp/app
         run: "composer config repositories.local '{\"type\": \"path\", \"url\": \"../../\", \"options\": {\"symlink\": true}}'"

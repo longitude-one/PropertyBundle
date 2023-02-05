@@ -17,9 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@master
 
+      # Composer validation --------------------------------------------------------------------------------------------
       - name: Validate composer.json
         run: composer validate --strict
 
+      # PHP setup ------------------------------------------------------------------------------------------------------
       - name: Setup PHP ${{ matrix.php }}
         uses: shivammathur/setup-php@v2
         with:
@@ -43,16 +45,20 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-php-${{ matrix.php }}-symfony-${{ matrix.symfony }}
 
+      # Composer install -----------------------------------------------------------------------------------------------
       - name: Composer update with PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         run: SYMFONY_REQUIRE=${{ matrix.symfony }} composer update --prefer-dist --no-progress
 
-      - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+      # Unit tests -----------------------------------------------------------------------------------------------------
+      - name: Run unit test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         run: vendor/bin/phpunit tests/Unit
 
-      - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+      # Functional tests -----------------------------------------------------------------------------------------------
+      - name: Run function test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         run: vendor/bin/phpunit tests/Functional
 
-      # I try to create a new application with the bundle installed
+      # Integration tests-----------------------------------------------------------------------------------------------
+      # These lines create a new application with the bundle installed
       - name: Directory creation
         run: mkdir tmp
       - name: New application creation
@@ -66,7 +72,7 @@ jobs:
         run: "composer config repositories.local '{\"type\": \"path\", \"url\": \"../../\", \"options\": {\"symlink\": true}}'"
       - name: Bundle installation
         working-directory: tmp/app
-        run: composer require easycorp/easyadmin-bundle longitude-one/property-bundle symfony/twig-bundle --no-interaction
+        run: composer require easycorp/easyadmin-bundle longitude-one/property-bundle symfony/twig-bundle --no-interaction --no-scripts
       - name: Copy some custom file (entity, repository), the .env file, and simple config files into the new application
         working-directory: tmp/app
         run: cp -R ../../tests/Tools/app-skeleton/src . && cp -R ../../tests/Tools/app-skeleton/.env . && cp -R ../../tests/Tools/app-skeleton/config .
@@ -81,10 +87,11 @@ jobs:
       - name: Schema creation
         working-directory: tmp/app
         run: symfony console doctrine:schema:create
-      - name: Starting integration test
+      # Integration tests -----------------------------------------------------------------------------------------------
+      - name: Run integration test on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
         run: vendor/bin/phpunit tests/Application
-      # TODO run integration test
 
+      # PHP-CS-Fixer ---------------------------------------------------------------------------------------------------
       - name: install PHPCSFIXER
         run: composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer
 
@@ -97,6 +104,7 @@ jobs:
         if: ${{ matrix.php == '8.1' }}
         run: tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config=tools/php-cs-fixer/.php-cs-fixer.php
 
+        # PHPStan ------------------------------------------------------------------------------------------------------
       - name: PHPStan Static Analysis
         uses: php-actions/phpstan@master
         with:

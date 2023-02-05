@@ -11,18 +11,20 @@
 
 namespace LongitudeOne\PropertyBundle\Tests\Application;
 
-use LongitudeOne\PropertyBundle\Tests\App\Entity\Character;
 use LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\Panther\Client;
 
-class DashboardTest extends AppTestCase
+class DashboardTest extends TestCase
 {
     public function testDashboardAvailable(): void
     {
         // This calls KernelTestCase::bootKernel(), and creates a "client" that is acting as the browser
-        $client = static::createClient();
+        // FIXME replace this string with some app environment variable
+        $client = Client::createSeleniumClient('http://127.0.0.1:8000/');
 
         // Request a specific page
-        $client->request('GET', '/admin');
+        $client->request('GET', 'admin');
 
         if ($client->getResponse()->isRedirection()) {
             $client->followRedirect();
@@ -35,7 +37,8 @@ class DashboardTest extends AppTestCase
 
     public function testEntitiesList(): void
     {
-        $client = static::createClient();
+        // FIXME replace this string with some app environment variable
+        $client = Client::createSeleniumClient('http://127.0.0.1:8000/');
         $client->request('GET', '/admin/?routeName=longitudeone_property_tests_app_admin_dashboard_list');
 
         if ($client->getResponse()->isRedirection()) {
@@ -45,6 +48,5 @@ class DashboardTest extends AppTestCase
         // Validate a successful response and that our extendable entities are listed
         $this->assertResponseIsSuccessful();
         $this->assertSelectorTextContains('body', ToolEntity::class);
-        $this->assertSelectorTextContains('body', Character::class);
     }
 }

@@ -74,7 +74,7 @@ jobs:
         run: wget https://get.symfony.com/cli/installer -O - | bash && mv ~/.symfony5/bin/symfony /usr/local/bin/symfony
       - name: Starting symfony server
         working-directory: tmp/app
-        run: symfony server:start --daemon
+        run: symfony server:start --no-tls --daemon
       - name: Clearing cache and assets installation
         working-directory: tmp/app
         run: symfony console cache:clear && symfony console assets:install

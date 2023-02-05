@@ -47,10 +47,10 @@ jobs:
         run: SYMFONY_REQUIRE=${{ matrix.symfony }} composer update --prefer-dist --no-progress
 
       - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: vendor/bin/phpunit Unit
+        run: vendor/bin/phpunit tests/Unit
 
       - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: vendor/bin/phpunit Functional
+        run: vendor/bin/phpunit tests/Functional
 
       # I try to create a new application with the bundle installed
       - name: Directory creation
@@ -77,7 +77,7 @@ jobs:
         working-directory: tmp/app
         run: symfony console doctrine:schema:create
       - name: Starting integration test
-        run: vendor/bin/phpunit Application
+        run: vendor/bin/phpunit tests/Application
       # TODO run integration test
 
       - name: install PHPCSFIXER

@@ -71,7 +71,7 @@ jobs:
         working-directory: tmp/app
         run: cp -R ../../tests/Tools/app-skeleton/src . && cp -R ../../tests/Tools/app-skeleton/.env . && cp -R ../../tests/Tools/app-skeleton/config .
       - name: Symfony binary client installation
-        run: wget https://get.symfony.com/cli/installer -O - | bash
+        run: wget https://get.symfony.com/cli/installer -O - | bash && mv ~/.symfony/bin/symfony /usr/local/bin/symfony
       - name: Starting symfony server
         working-directory: tmp/app
         run: symfony server:start --daemon

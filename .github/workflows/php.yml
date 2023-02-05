@@ -67,9 +67,11 @@ jobs:
       - name: Bundle installation
         working-directory: tmp/app
         run: composer require easycorp/easyadmin-bundle longitude-one/property-bundle symfony/twig-bundle --no-interaction
-      - name: Copy updated files into the new application
+      - name: Copy some custom file (entity, repository), the .env file, and simple config files into the new application
         working-directory: tmp/app
         run: cp -R ../../tests/Tools/app-skeleton/src . && cp -R ../../tests/Tools/app-skeleton/.env . && cp -R ../../tests/Tools/app-skeleton/config .
+      - name: Symfony binary client installation
+        run: wget https://get.symfony.com/cli/installer -O - | bash
       - name: Starting symfony server
         working-directory: tmp/app
         run: symfony server:start --daemon

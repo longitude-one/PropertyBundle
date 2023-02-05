@@ -56,6 +56,7 @@ class CrudActionListener implements EventSubscriberInterface
     public function afterCrudActionEvent(AfterCrudActionEvent $event): void
     {
         // Is extendable entity declared?
+        // FIXME remove the last test because if and only if entity implements ExtendableInterface, it is extendable.
         if (null === $event->getAdminContext() || !$this->propertyService->has($event->getAdminContext()->getEntity()->getFqcn())) {
             return;
         }
@@ -93,6 +94,7 @@ class CrudActionListener implements EventSubscriberInterface
     public function beforeCrudActionEvent(BeforeCrudActionEvent $event): void
     {
         // Is extendable entity declared?
+        // FIXME remove the last test because if and only if entity implements ExtendableInterface, it is extendable.
         if (null === $event->getAdminContext() || !$this->propertyService->has($event->getAdminContext()->getEntity()->getFqcn())) {
             return;
         }
@@ -162,7 +164,7 @@ class CrudActionListener implements EventSubscriberInterface
         };
     }
 
-    private function getInstance(AdminContext $adminContext): ExtendableInterface
+    private function getInstance(AdminContext $adminContext): object
     {
         return $adminContext->getEntity()->getInstance();
     }
@@ -171,6 +173,10 @@ class CrudActionListener implements EventSubscriberInterface
     {
         // $event->getAdminContext() cannot be null because of the first test.
         $instance = $this->getInstance($event->getAdminContext());
+        if (!$instance instanceof ExtendableInterface) {
+            return;
+        }
+
         $propertiesDto = $this->propertyService->getPropertiesDto($instance);
         $event->getResponseParameters()->set('properties', $propertiesDto);
     }
@@ -182,6 +188,10 @@ class CrudActionListener implements EventSubscriberInterface
 
         // TODO add a fieldset for our custom properties
         $instance = $this->getInstance($event->getAdminContext());
+        if (!$instance instanceof ExtendableInterface) {
+            return;
+        }
+
         // put that in a service
         foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {
             $this->completeForm($form, $propertyDto);
@@ -202,6 +212,10 @@ class CrudActionListener implements EventSubscriberInterface
         $instance = $this->getInstance($event->getAdminContext());
         if ($instance instanceof LinkedInterface) {
             $this->completeExtandableEntity($instance);
+        }
+
+        if (!$instance instanceof ExtendableInterface) {
+            return;
         }
 
         foreach ($this->propertyService->getPropertiesDto($instance) as $propertyDto) {

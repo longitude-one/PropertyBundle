@@ -23,7 +23,7 @@
                 <td>{{ ('lopb.keyword.' ~ keyword) | trans({}, 'messages') }}</td>
                 <td><code>{{ entity.class }}</code></td>
                 <td>
-                    <a href="{{ path('longitudeone_property_tests_app_admin_dashboard_show_entity', {'keyword': keyword}) }}" title="{{ 'entities.show' | trans }}" class="btn">
+                    <a href="{{ path('longitudeone_property_extendable_entities_show', {'keyword': keyword}) }}" title="{{ 'entities.show' | trans }}" class="btn">
                         <span class="sr-only">{{ 'entities.show' | trans }}</span>
                         <i class="fa fa-eye"></i>
                     </a>

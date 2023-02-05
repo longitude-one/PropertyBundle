@@ -100,6 +100,7 @@ return static function (ContainerConfigurator $container) {
     ;
 
     // TODO Find a way to tell devs that PropertyContextService is only available when easy admin bundle is included.
+    // FIXME split PropertyContextService in two services: one with AdminContextProvider and one without.
     if (class_exists(AdminContextProvider::class)) {
         $container->services()
             ->set(PropertyContextService::class)

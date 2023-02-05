@@ -1,5 +1,0 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: LongitudeOne\PropertyBundle\Tests\App\Controller
-    type: attribute

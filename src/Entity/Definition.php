@@ -18,14 +18,16 @@ use Doctrine\ORM\Mapping as ORM;
 use LongitudeOne\PropertyBundle\Exception\InvalidTypeException;
 use LongitudeOne\PropertyBundle\Repository\DefinitionRepository;
 use LongitudeOne\PropertyBundle\Validator as LongitudeOneAssert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
 
-// TODO Index lopb_index_definition_name shall be uniq!
 #[ORM\Entity(repositoryClass: DefinitionRepository::class)]
 #[ORM\Table(name: 'lopb_definitions')]
-#[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_definition_name')]
+#[ORM\Index(columns: ['name'], name: 'lopb_index_definition_name', options: ['unique' => true])]
+#[ORM\Index(columns: ['name', 'entity_classname'], name: 'lopb_index_definition_name_class')]
 #[ORM\Index(columns: ['entity_classname'], name: 'lopb_index_property_entity')]
+#[UniqueEntity('name')]
 class Definition implements DefinitionInterface
 {
     #[ORM\Column]
@@ -39,7 +41,7 @@ class Definition implements DefinitionInterface
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::STRING, length: 31)]
+    #[ORM\Column(type: Types::STRING, length: 31, unique: true)]
     #[LongitudeOneAssert\Keyword]
     #[Assert\Length(max: 31)]
     private string $name;
@@ -61,7 +63,6 @@ class Definition implements DefinitionInterface
 
     public static function loadValidatorMetadata(ClassMetadata $metadata): void
     {
-        dd('je passe par là');
         $metadata->addPropertyConstraint('name', new LongitudeOneAssert\Keyword());
     }
 

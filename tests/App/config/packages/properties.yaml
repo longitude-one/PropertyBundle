@@ -1,8 +1,0 @@
-longitude_one_property:
-    extendable_entities:
-        tool:
-            keyword: 'tool'
-            class: 'LongitudeOne\PropertyBundle\Tests\Tools\ToolEntity'
-        character:
-            keyword: 'character'
-            class: 'LongitudeOne\PropertyBundle\Tests\App\Entity\Character'

@@ -47,7 +47,38 @@ jobs:
         run: SYMFONY_REQUIRE=${{ matrix.symfony }} composer update --prefer-dist --no-progress
 
       - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
-        run: vendor/bin/phpunit
+        run: vendor/bin/phpunit Unit
+
+      - name: Run test suite on PHP ${{ matrix.php }} and Symfony ${{ matrix.symfony }}
+        run: vendor/bin/phpunit Functional
+
+      # I try to create a new application with the bundle installed
+      - name: Directory creation
+        run: mkdir tmp
+      - name: New application creation
+        working-directory: tmp/
+        run: composer create-project symfony/skeleton:6.2.0 app --stability dev
+      - name: Setup local bundle
+        working-directory: tmp/app
+        run: "composer config repositories.local '{\"type\": \"path\", \"url\": \"../../\", \"options\": {\"symlink\": true}}'"
+      - name: Bundle installation
+        working-directory: tmp/app
+        run: composer require easycorp/easyadmin-bundle longitude-one/property-bundle symfony/twig-bundle --no-interaction
+      - name: Copy updated files into the new application
+        working-directory: tmp/app
+        run: cp -R ../../tests/Tools/app-skeleton/src . && cp -R ../../tests/Tools/app-skeleton/.env . && cp -R ../../tests/Tools/app-skeleton/config .
+      - name: Starting symfony server
+        working-directory: tmp/app
+        run: symfony server:start --daemon
+      - name: Clearing cache and assets installation
+        working-directory: tmp/app
+        run: symfony console cache:clear && symfony console assets:install
+      - name: Schema creation
+        working-directory: tmp/app
+        run: symfony console doctrine:schema:create
+      - name: Starting integration test
+        run: vendor/bin/phpunit Application
+      # TODO run integration test
 
       - name: install PHPCSFIXER
         run: composer require --working-dir=tools/php-cs-fixer friendsofphp/php-cs-fixer

@@ -57,7 +57,7 @@ jobs:
         run: mkdir tmp
       - name: New application creation
         working-directory: tmp/
-        run: composer create-project symfony/skeleton:6.2.0 app --stability dev
+        run: composer create-project symfony/skeleton:"6.2.*" app --stability dev
       - name: Setup local bundle
         working-directory: tmp/app
         run: "composer config repositories.local '{\"type\": \"path\", \"url\": \"../../\", \"options\": {\"symlink\": true}}'"
